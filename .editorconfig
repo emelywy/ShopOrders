@@ -42,6 +42,14 @@ dotnet_diagnostic.SA0001.severity = none
 dotnet_diagnostic.SA1600.severity = none
 dotnet_diagnostic.SA1601.severity = none
 dotnet_diagnostic.SA1602.severity = none
+
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1514.severity = none
+
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1514.severity = none
+dotnet_diagnostic.SA1516.severity = none
+
 # кома в кінці багаторядкового ініціалізатора необов’язкова
 dotnet_diagnostic.SA1413.severity = none
 # правила, які лишаємо суворими
