@@ -1,39 +1,82 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShopOrders.Core.Domain;
-/// <summary>Замовлення покупця</summary>
-public sealed class Order
+namespace ShopOrders.Core.Domain
 {
-    private readonly List<OrderLine> _lines = new();
-    public int Id { get; init; }
-    public int CustomerId { get; init; }
-    public OrderStatus Status { get; set; } = OrderStatus.New;
-    public DateTimeOffset CreatedAt { get; init; }
-
-    public DeliveryDetails? Delivery { get; set; }
-    public PaymentInfo? Payment { get; set; }
-
-    public IReadOnlyList<OrderLine> Lines => _lines;
-
-    public void AddLine(OrderLine line) => _lines.Add(line);
-
-    public decimal Total()
+    public class Order
     {
-        decimal sum = 0m;
-        foreach (OrderLine line in _lines)
+        private readonly List<string[]> _lines = new List<string[]>();
+
+        public string Id { get; private set; }
+        public string CustomerName { get; private set; }
+        public int Status { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+
+        public Order(string id, string customerName)
         {
-            sum += line.Amount;
+            Id = id;
+            CustomerName = customerName;
+            CreatedAt = DateTime.Now;
         }
 
-        if (Delivery != null)
+        public void AddLine(string sku, int quantity, decimal unitPrice)
         {
-            sum += Delivery.DeliveryCost;
+            string[] lineData = new string[3];
+            lineData[0] = sku; lineData[1] = quantity.ToString(); lineData[2] = unitPrice.ToString();
+            _lines.Add(lineData);
         }
 
-        return sum;
+        public decimal CalculateTotal(bool isRegularCustomer)
+        {
+            decimal total = 0; int lineCount = 0;
+            for (int i = 0; i < _lines.Count; i++)
+            {
+                int k = int.Parse(_lines[i][1]);
+                decimal c = decimal.Parse(_lines[i][2]);
+                total = total + k * c;
+                lineCount = lineCount + 1;
+            }
+            if (isRegularCustomer == true && total > 1000) { total = total * 0.9m; } else if (total > 5000) { total = total * 0.85m; } else { total = total; }
+            if (lineCount > 10) total = total - 100;
+            if (total < 0) total = 0;
+            total = total + total * 0.2m;
+            return Math.Round(total, 2);
+        }
+
+        public bool TryChangeStatus(int newStatus)
+        {
+            if (Status == 0 && newStatus == 1) { Status = 1; return true; }
+            if (Status == 1 && newStatus == 2) { Status = 2; return true; }
+            if (Status == 0 && newStatus == 3) { Status = 3; return true; }
+            return false;
+        }
+
+        public bool IsValid()
+        {
+            if (Id != null && Id != "" && CustomerName != null && CustomerName.Length > 2 && _lines.Count > 0 && _lines.Count < 100 && Status >= 0 && Status <= 3)
+                return true;
+            else
+                return false;
+        }
+
+        public string BuildReport()
+        {
+            string s = "";
+            for (int i = 0; i < _lines.Count; i++)
+            {
+                s = s + "Товар: " + _lines[i][0] + "; кількість: " + _lines[i][1] + "; ціна: " + _lines[i][2] + "; сума: " + (int.Parse(_lines[i][1]) * decimal.Parse(_lines[i][2])) + "\n";
+            }
+            s = s + "Разом: " + CalculateTotal(false) + "\n";
+            return s;
+        }
+
+        public static Order FindById(List<Order> orders, string orderId)
+        {
+            for (int i = 0; i < orders.Count; i++)
+            {
+                if (orders[i].Id == orderId) { return orders[i]; }
+            }
+            return null;
+        }
     }
 }
