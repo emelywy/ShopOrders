@@ -8,6 +8,45 @@ namespace ShopOrders.Core.Domain;
 /// </summary>
 public class Order
 {
+    /// <summary>Ставка податку на додану вартість.</summary>
+    private const decimal VatRate = 0.2m;
+
+    /// <summary>Поріг суми для знижки постійному покупцю.</summary>
+    private const decimal RegularDiscountThreshold = 1000m;
+
+    /// <summary>Частка знижки постійному покупцю.</summary>
+    private const decimal RegularDiscountRate = 0.10m;
+
+    /// <summary>Поріг суми для знижки на велике замовлення.</summary>
+    private const decimal LargeOrderThreshold = 5000m;
+
+    /// <summary>Частка знижки на велике замовлення.</summary>
+    private const decimal LargeOrderDiscountRate = 0.15m;
+
+    /// <summary>Кількість рядків, з якої діє гуртова знижка.</summary>
+    private const int BulkLineCount = 10;
+
+    /// <summary>Сума гуртової знижки, грн.</summary>
+    private const decimal BulkDiscountAmount = 100m;
+
+    /// <summary>Межа кількості рядків.</summary>
+    private const int MaxLineCount = 100;
+
+    /// <summary>Найкоротше ім’я покупця.</summary>
+    private const int MinCustomerNameLength = 2;
+
+    /// <summary>Стан: Нове.</summary>
+    private const int StatusNew = 0;
+
+    /// <summary>Стан: Оплачено.</summary>
+    private const int StatusPaid = 1;
+
+    /// <summary>Стан: Відправлено.</summary>
+    private const int StatusShipped = 2;
+
+    /// <summary>Стан: Скасовано.</summary>
+    private const int StatusCancelled = 3;
+
     private readonly List<string[]> _lines = new List<string[]>();
 
     /// <summary>
@@ -93,19 +132,18 @@ public class Order
             lineCount = lineCount + 1;
         }
 
-        // Логіка знижок: відсоткові знижки застосовуються до повної суми, а фіксовані (-100 грн) віднімаються після них.
-        if (isRegularCustomer && total > 1000)
+        if (isRegularCustomer && total > RegularDiscountThreshold)
         {
-            total = total * 0.9m;
+            total *= 1m - RegularDiscountRate;
         }
-        else if (total > 5000)
+        else if (total > LargeOrderThreshold)
         {
-            total = total * 0.85m;
+            total *= 1m - LargeOrderDiscountRate;
         }
 
-        if (lineCount > 10)
+        if (lineCount > BulkLineCount)
         {
-            total = total - 100;
+            total -= BulkDiscountAmount;
         }
 
         if (total < 0)
@@ -113,8 +151,8 @@ public class Order
             total = 0;
         }
 
-        // Податок на додану вартість (ПДВ) становить 20%.
-        total = total + (total * 0.2m);
+        // ПДВ нараховується на суму вже після всіх знижок
+        total += total * VatRate;
         return Math.Round(total, 2);
     }
 
@@ -125,21 +163,21 @@ public class Order
     /// <returns>true, якщо перехід виконано; false, якщо він заборонений.</returns>
     public bool TryChangeStatus(int newStatus)
     {
-        if (Status == 0 && newStatus == 1)
+        if (Status == StatusNew && newStatus == StatusPaid)
         {
-            Status = 1;
+            Status = StatusPaid;
             return true;
         }
 
-        if (Status == 1 && newStatus == 2)
+        if (Status == StatusPaid && newStatus == StatusShipped)
         {
-            Status = 2;
+            Status = StatusShipped;
             return true;
         }
 
-        if (Status == 0 && newStatus == 3)
+        if (Status == StatusNew && newStatus == StatusCancelled)
         {
-            Status = 3;
+            Status = StatusCancelled;
             return true;
         }
 
@@ -153,9 +191,9 @@ public class Order
     public bool IsValid()
     {
         if (Id != null && Id != string.Empty
-            && CustomerName != null && CustomerName.Length > 2
-            && _lines.Count > 0 && _lines.Count < 100
-            && Status >= 0 && Status <= 3)
+            && CustomerName != null && CustomerName.Length > MinCustomerNameLength
+            && _lines.Count > 0 && _lines.Count < MaxLineCount
+            && Status >= StatusNew && Status <= StatusCancelled)
         {
             return true;
         }
