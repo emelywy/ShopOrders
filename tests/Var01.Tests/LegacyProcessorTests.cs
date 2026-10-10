@@ -1,10 +1,11 @@
 namespace Var01.Tests;
 
 using ShopOrders.Core.Legacy;
+using ShopOrders.Core.Orders;
 using Xunit;
 
 /// <summary>
-/// Характеризаційні тести для перевірки поведінки LegacyProcessor.
+/// Характеризаційні тести для перевірки поведінки процесора та захисних умов.
 /// </summary>
 public class LegacyProcessorTests
 {
@@ -66,24 +67,30 @@ public class LegacyProcessorTests
     }
 
     /// <summary>
-    /// Перевірка повернення -1 при порожньому списку позицій.
+    /// Перевірка того, що порожній список позицій кидає виняток ArgumentException.
     /// </summary>
     [Fact]
-    public void Process_NoLines_ReturnsMinusOne()
+    public void Calculate_NoLines_ThrowsArgument()
     {
-        decimal total = LegacyProcessor.Process(
-            3,
-            "Коваль",
-            "k@ex.com",
-            false,
-            new List<OrderLine>(),
-            new DateOnly(2026, 3, 10),
-            string.Empty,
-            "New",
-            false,
-            60m,
-            out string next);
+        Assert.Throws<ArgumentException>(() =>
+            OrderGuards.EnsureLinesValid(
+                new List<OrderLine>()));
+    }
 
-        Assert.Equal(-1m, total);
+    /// <summary>
+    /// Перевірка того, що нульова кількість товару кидає ArgumentOutOfRangeException.
+    /// </summary>
+    [Fact]
+    public void Calculate_ZeroQuantity_ThrowsRange()
+    {
+        OrderLine line = new()
+        {
+            Sku = "A1",
+            Quantity = 0,
+            UnitPrice = 10m,
+        };
+
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            OrderGuards.EnsureLineValid(line));
     }
 }
