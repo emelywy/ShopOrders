@@ -5,12 +5,12 @@ using ShopOrders.Core.Orders;
 using Xunit;
 
 /// <summary>
-/// Характеризаційні тести для перевірки поведінки процесора та захисних умов.
+/// Характеризаційні тести для перевірки декомпонованого процесора та захисних умов.
 /// </summary>
 public class LegacyProcessorTests
 {
     /// <summary>
-    /// Перевірка розрахунку для постійного клієнта.
+    /// Перевірка розрахунку для постійного клієнта через новий диспетчер.
     /// </summary>
     [Fact]
     public void Process_RegularClient_Returns1292()
@@ -21,7 +21,7 @@ public class LegacyProcessorTests
             new OrderLine { Sku = "B2", Quantity = 1, UnitPrice = 250m },
         };
 
-        decimal total = LegacyProcessor.Process(
+        decimal total = OrderTotalCalculator.Process(
             1,
             "Іваненко",
             "i@ex.com",
@@ -29,17 +29,17 @@ public class LegacyProcessorTests
             lines,
             new DateOnly(2026, 3, 10),
             string.Empty,
-            "New",
+            OrderStatus.New,
             false,
             60m,
-            out string next);
+            out OrderStatus next);
 
         Assert.Equal(1292.70m, total);
-        Assert.Equal("Paid", next);
+        Assert.Equal(OrderStatus.Paid, next);
     }
 
     /// <summary>
-    /// Перевірка додавання вартості доставки для невеликого замовлення.
+    /// Перевірка додавання вартості доставки для невеликого замовлення через новий диспетчер.
     /// </summary>
     [Fact]
     public void Process_SmallOrder_AddsDelivery()
@@ -49,7 +49,7 @@ public class LegacyProcessorTests
             new OrderLine { Sku = "A1", Quantity = 2, UnitPrice = 200m },
         };
 
-        decimal total = LegacyProcessor.Process(
+        decimal total = OrderTotalCalculator.Process(
             2,
             "Петренко",
             "p@ex.com",
@@ -57,13 +57,13 @@ public class LegacyProcessorTests
             lines,
             new DateOnly(2026, 3, 10),
             "SALE10",
-            "Paid",
+            OrderStatus.Paid,
             false,
             60m,
-            out string next);
+            out OrderStatus next);
 
         Assert.Equal(420m, total);
-        Assert.Equal("Shipped", next);
+        Assert.Equal(OrderStatus.Shipped, next);
     }
 
     /// <summary>
