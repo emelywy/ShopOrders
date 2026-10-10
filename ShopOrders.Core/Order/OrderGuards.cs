@@ -1,12 +1,32 @@
 namespace ShopOrders.Core.Orders;
 
-using ShopOrders.Core.Legacy;
+using ShopOrders.Core.Domain;
 
 /// <summary>
 /// Допоміжний клас із захисними умовами для перевірки контрактів замовлення.
 /// </summary>
 public static class OrderGuards
 {
+    /// <summary>
+    /// Комплексна перевірка валідності всього об'єкта запиту на розрахунок замовлення.
+    /// </summary>
+    /// <param name="request">Об'єкт запиту на розрахунок.</param>
+    public static void EnsureRequestValid(TotalRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        ArgumentNullException.ThrowIfNull(request.Client);
+
+        EnsureHeaderValid(
+            request.DocumentId,
+            request.Client.Name,
+            request.Client.Email);
+
+        EnsureLinesValid(request.Lines);
+
+        ArgumentOutOfRangeException.ThrowIfNegative(
+            request.DeliveryPrice);
+    }
+
     /// <summary>
     /// Перевіряє коректність основних заголовних даних замовлення.
     /// </summary>

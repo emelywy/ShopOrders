@@ -1,69 +1,35 @@
 namespace ShopOrders.Core.Orders;
 
-using ShopOrders.Core.Legacy;
+using ShopOrders.Core.Domain;
 
 /// <summary>
-/// Калькулятор розрахунку вартості замовлення та метод-диспетчер обробки.
+/// Калькулятор розрахунку вартості замовлення.
 /// </summary>
 public static class OrderTotalCalculator
 {
     /// <summary>
-    /// Метод-диспетчер обробки замовлення, що координує виклики функціональних підпрограм.
+    /// Виконує чистий розрахунок підсумку замовлення без побічних ефектів.
     /// </summary>
-    /// <param name="orderId">Номер документа замовлення.</param>
-    /// <param name="clientName">Ім'я клієнта.</param>
-    /// <param name="clientEmail">Електронна пошта клієнта.</param>
-    /// <param name="isRegular">Чи є клієнт постійним покупцем.</param>
-    /// <param name="lines">Список позицій товарів.</param>
-    /// <param name="createdAt">Дата створення замовлення.</param>
-    /// <param name="couponCode">Промокод / купон на знижку.</param>
-    /// <param name="status">Поточний стан замовлення.</param>
-    /// <param name="printToConsole">Прапорець друку чека в консоль.</param>
-    /// <param name="deliveryPrice">Базова вартість доставки.</param>
-    /// <param name="newStatus">Новий стан замовлення після обробки.</param>
-    /// <returns>Підсумкова вартість замовлення.</returns>
-    public static decimal Process(
-        int orderId,
-        string clientName,
-        string clientEmail,
-        bool isRegular,
-        IReadOnlyList<OrderLine> lines,
-        DateOnly createdAt,
-        string couponCode,
-        OrderStatus status,
-        bool printToConsole,
-        decimal deliveryPrice,
-        out OrderStatus newStatus)
+    /// <param name="request">Об'єкт параметрів запиту на розрахунок.</param>
+    /// <returns>Результат розрахунку з підсумковою сумою та новим станом.</returns>
+    public static TotalResult Calculate(TotalRequest request)
     {
-        OrderGuards.EnsureHeaderValid(orderId, clientName, clientEmail);
+        OrderGuards.EnsureRequestValid(request);
 
-        decimal total = SubtotalOf(lines);
-        total -= ClientDiscountOf(total, isRegular);
+        decimal total = SubtotalOf(request.Lines);
+        total -= ClientDiscountOf(total, request.Client.IsRegular);
         total -= VolumeDiscountOf(total);
-        total -= CouponDiscountOf(total, couponCode);
-        total -= WeekendDiscountOf(total, createdAt);
-        total += DeliveryFeeOf(total, deliveryPrice);
+        total -= CouponDiscountOf(total, request.CouponCode);
+        total -= WeekendDiscountOf(total, request.CreatedAt);
+        total += DeliveryFeeOf(total, request.DeliveryPrice);
 
-        total = status == OrderStatus.Cancelled
+        total = request.Status == OrderStatus.Cancelled
             ? 0m
             : Math.Round(Math.Max(total, 0m), 2);
 
-        newStatus = NextStatusOf(status, total);
-
-        if (printToConsole)
-        {
-            Console.WriteLine("Документ No " + orderId);
-            Console.WriteLine("Клієнт: " + clientName);
-            foreach (OrderLine line in lines)
-            {
-                Console.WriteLine(line.Sku + " x " + line.Quantity);
-            }
-
-            Console.WriteLine("Разом: " + total);
-            Console.WriteLine("Стан: " + newStatus);
-        }
-
-        return total;
+        return new TotalResult(
+            total,
+            NextStatusOf(request.Status, total));
     }
 
     /// <summary>

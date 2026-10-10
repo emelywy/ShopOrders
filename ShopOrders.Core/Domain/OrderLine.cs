@@ -1,33 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ShopOrders.Core.Domain;
 
 /// <summary>
-/// Рядок замовлення (позиція товару).
+/// Позиція товару в замовленні.
 /// </summary>
-public sealed class OrderLine
+public class OrderLine
 {
     /// <summary>
-    /// Отримує або задає артикул товару.
+    /// Артикул товару.
     /// </summary>
-    public string Sku { get; init; } = string.Empty;
+    public string Sku { get; set; } = string.Empty;
 
     /// <summary>
-    /// Отримує або задає кількість одиниць товару.
+    /// Кількість одиниць.
     /// </summary>
-    public int Quantity { get; init; }
+    public int Quantity { get; set; }
 
     /// <summary>
-    /// Отримує або задає ціну за одиницю товару, грн.
+    /// Ціна за одиницю.
     /// </summary>
-    public decimal UnitPrice { get; init; }
-
-    /// <summary>
-    /// Отримує загальну суму за цей рядок (кількість помножена на ціну).
-    /// </summary>
-    public decimal Amount => Quantity * UnitPrice;
+    public decimal UnitPrice { get; set; }
 }
