@@ -35,7 +35,7 @@ public class LegacyProcessorTests
             Client: new ClientInfo("Петренко", "p@ex.com", false),
             Lines: new List<OrderLine>
             {
-                new() { Sku = "A1", Quantity = 2, UnitPrice = 200m },
+                new("A1", 2, 200m),
             },
             CreatedAt: new DateOnly(2026, 3, 10),
             CouponCode: "SALE10",
@@ -64,14 +64,8 @@ public class LegacyProcessorTests
     [Fact]
     public void Calculate_ZeroQuantity_ThrowsRange()
     {
-        OrderLine line = new()
-        {
-            Sku = "A1",
-            Quantity = 0,
-            UnitPrice = 10m,
-        };
-
-        Assert.Throws<ArgumentOutOfRangeException>(() => OrderGuards.EnsureLineValid(line));
+        // Конструктор незмінного OrderLine самостійно захищає інваріант і кидає ArgumentOutOfRangeException
+        Assert.Throws<ArgumentOutOfRangeException>(() => new OrderLine("A1", 0, 10m));
     }
 
     /// <summary>
@@ -113,8 +107,8 @@ public class LegacyProcessorTests
             Client: new ClientInfo("Іваненко", "i@ex.com", true),
             Lines: new List<OrderLine>
             {
-                new() { Sku = "A1", Quantity = 12, UnitPrice = 100m },
-                new() { Sku = "B2", Quantity = 1, UnitPrice = 250m },
+                new("A1", 12, 100m),
+                new("B2", 1, 250m),
             },
             CreatedAt: new DateOnly(2026, 3, 10),
             CouponCode: null,

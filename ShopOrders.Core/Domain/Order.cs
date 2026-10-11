@@ -1,223 +1,148 @@
-using System;
-using System.Collections.Generic;
-
 namespace ShopOrders.Core.Domain;
+using ShopOrders.Core.Orders;
 
 /// <summary>
-/// Замовлення покупця в інтернет-магазині.
+/// Статуси життєвого циклу замовлення інтернет-магазину.
 /// </summary>
-public class Order
+
+/// <summary>
+/// Агрегат замовлення: керує позиціями та контролює життєвий цикл переходів стану.
+/// </summary>
+public sealed class Order
 {
-    /// <summary>Ставка податку на додану вартість.</summary>
-    private const decimal VatRate = 0.2m;
-
-    /// <summary>Поріг суми для знижки постійному покупцю.</summary>
-    private const decimal RegularDiscountThreshold = 1000m;
-
-    /// <summary>Частка знижки постійному покупцю.</summary>
-    private const decimal RegularDiscountRate = 0.10m;
-
-    /// <summary>Поріг суми для знижки на велике замовлення.</summary>
-    private const decimal LargeOrderThreshold = 5000m;
-
-    /// <summary>Частка знижки на велике замовлення.</summary>
-    private const decimal LargeOrderDiscountRate = 0.15m;
-
-    /// <summary>Кількість рядків, з якої діє гуртова знижка.</summary>
-    private const int BulkLineCount = 10;
-
-    /// <summary>Сума гуртової знижки, грн.</summary>
-    private const decimal BulkDiscountAmount = 100m;
-
-    /// <summary>Межа кількості рядків.</summary>
-    private const int MaxLineCount = 100;
-
-    /// <summary>Найкоротше ім’я покупця.</summary>
-    private const int MinCustomerNameLength = 2;
-
-    /// <summary>Стан: Нове.</summary>
-    private const int StatusNew = 0;
-
-    /// <summary>Стан: Оплачено.</summary>
-    private const int StatusPaid = 1;
-
-    /// <summary>Стан: Відправлено.</summary>
-    private const int StatusShipped = 2;
-
-    /// <summary>Стан: Скасовано.</summary>
-    private const int StatusCancelled = 3;
-
-    private readonly List<string[]> _lines = new List<string[]>();
+    private readonly List<OrderLine> _lines = new();
 
     /// <summary>
-    /// Ініціалізує нове замовлення.
+    /// Ініціалізує новий екземпляр класу <see cref="Order"/>.
     /// </summary>
     /// <param name="id">Унікальний ідентифікатор замовлення.</param>
-    /// <param name="customerName">ПІБ або назва покупця.</param>
-    public Order(string id, string customerName)
+    /// <param name="customerId">Ідентифікатор замовника.</param>
+    /// <param name="createdAt">Дата створення замовлення.</param>
+    public Order(int id, int customerId, DateOnly createdAt)
     {
+        if (id <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(id), "Ідентифікатор замовлення має бути більшим за нуль.");
+        }
+
+        if (customerId <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(customerId), "Ідентифікатор покупця має бути більшим за нуль.");
+        }
+
         Id = id;
-        CustomerName = customerName;
-        CreatedAt = DateTime.Now;
+        CustomerId = customerId;
+        CreatedAt = createdAt;
+        Status = OrderStatus.New;
     }
 
     /// <summary>
-    /// Отримує ідентифікатор замовлення.
+    /// Отримує унікальний ідентифікатор замовлення.
     /// </summary>
-    public string Id { get; private set; }
+    public int Id { get; }
 
     /// <summary>
-    /// Отримує ім'я покупця.
+    /// Отримує ідентифікатор замовника.
     /// </summary>
-    public string CustomerName { get; private set; }
+    public int CustomerId { get; }
+
+    /// <summary>
+    /// Отримує дату створення замовлення.
+    /// </summary>
+    public DateOnly CreatedAt { get; }
 
     /// <summary>
     /// Отримує поточний статус замовлення.
     /// </summary>
-    public int Status { get; private set; }
+    public OrderStatus Status { get; private set; }
 
     /// <summary>
-    /// Отримує дату та час створення замовлення.
+    /// Отримує дату та час відправлення замовлення.
     /// </summary>
-    public DateTime CreatedAt { get; private set; }
+    public DateTime? ShippedAt { get; private set; }
 
     /// <summary>
-    /// Шукає замовлення у списку за його ідентифікатором.
+    /// Отримує список позицій замовлення лише для читання.
     /// </summary>
-    /// <param name="orders">Список замовлень для пошуку.</param>
-    /// <param name="orderId">Ідентифікатор шуканого замовлення.</param>
-    /// <returns>Знайдене замовлення або null, якщо не знайдено.</returns>
-    public static Order? FindById(List<Order> orders, string orderId)
+    public IReadOnlyList<OrderLine> Lines => _lines.AsReadOnly();
+
+    /// <summary>
+    /// Додає позицію до замовлення.
+    /// </summary>
+    /// <param name="line">Позиція товару.</param>
+    public void AddLine(OrderLine line)
     {
-        for (int i = 0; i < orders.Count; i++)
+        ArgumentNullException.ThrowIfNull(line);
+
+        if (Status != OrderStatus.New)
         {
-            if (orders[i].Id == orderId)
-            {
-                return orders[i];
-            }
+            throw new InvalidOperationException("Позиції можна додавати лише до нового замовлення зі статусом New.");
         }
 
-        return null;
+        _lines.Add(line);
     }
 
     /// <summary>
-    /// Додає до замовлення рядок із товаром.
+    /// Переводить замовлення у статус оплаченого.
     /// </summary>
-    /// <param name="sku">Артикул товару.</param>
-    /// <param name="quantity">Кількість одиниць.</param>
-    /// <param name="unitPrice">Ціна за одиницю, грн.</param>
-    public void AddLine(string sku, int quantity, decimal unitPrice)
+    public void Pay()
     {
-        string[] lineData = new string[3];
-        lineData[0] = sku;
-        lineData[1] = quantity.ToString();
-        lineData[2] = unitPrice.ToString();
-        _lines.Add(lineData);
+        if (Status != OrderStatus.New)
+        {
+            throw new InvalidOperationException($"Неможливо оплатити замовлення у статусі {Status}. Дозволено лише для New.");
+        }
+
+        if (_lines.Count == 0)
+        {
+            throw new InvalidOperationException("Неможливо оплатити порожнє замовлення без жодної позиції.");
+        }
+
+        Status = OrderStatus.Paid;
     }
 
     /// <summary>
-    /// Розраховує загальну суму замовлення з урахуванням знижок та податків.
+    /// Переводить замовлення у статус відправленого.
     /// </summary>
-    /// <param name="isRegularCustomer">Чи є покупець постійним клієнтом.</param>
-    /// <returns>Підсумкова сума до сплати.</returns>
-    public decimal CalculateTotal(bool isRegularCustomer)
+    public void Ship()
     {
-        decimal total = 0;
-        int lineCount = 0;
-        for (int i = 0; i < _lines.Count; i++)
+        if (Status != OrderStatus.Paid)
         {
-            int k = int.Parse(_lines[i][1]);
-            decimal c = decimal.Parse(_lines[i][2]);
-            total = total + (k * c);
-            lineCount = lineCount + 1;
+            throw new InvalidOperationException("Відправити можна лише попередньо оплачене замовлення зі статусом Paid.");
         }
 
-        if (isRegularCustomer && total > RegularDiscountThreshold)
-        {
-            total *= 1m - RegularDiscountRate;
-        }
-        else if (total > LargeOrderThreshold)
-        {
-            total *= 1m - LargeOrderDiscountRate;
-        }
-
-        if (lineCount > BulkLineCount)
-        {
-            total -= BulkDiscountAmount;
-        }
-
-        if (total < 0)
-        {
-            total = 0;
-        }
-
-        // ПДВ нараховується на суму вже після всіх знижок
-        total += total * VatRate;
-        return Math.Round(total, 2);
+        Status = OrderStatus.Shipped;
+        ShippedAt = DateTime.UtcNow;
     }
 
     /// <summary>
-    /// Змінює стан замовлення, якщо перехід дозволений правилами предметної області.
+    /// Скасовує замовлення.
     /// </summary>
-    /// <param name="newStatus">Цільовий стан замовлення.</param>
-    /// <returns>true, якщо перехід виконано; false, якщо він заборонений.</returns>
-    public bool TryChangeStatus(int newStatus)
+    public void Cancel()
     {
-        if (Status == StatusNew && newStatus == StatusPaid)
+        if (Status != OrderStatus.New && Status != OrderStatus.Paid)
         {
-            Status = StatusPaid;
-            return true;
+            throw new InvalidOperationException($"Неможливо скасувати замовлення у статусі {Status}.");
         }
 
-        if (Status == StatusPaid && newStatus == StatusShipped)
-        {
-            Status = StatusShipped;
-            return true;
-        }
-
-        if (Status == StatusNew && newStatus == StatusCancelled)
-        {
-            Status = StatusCancelled;
-            return true;
-        }
-
-        return false;
+        Status = OrderStatus.Cancelled;
     }
 
     /// <summary>
-    /// Перевіряє, чи заповнені всі обов'язкові поля замовлення і чи є воно валідним.
+    /// Оформлює повернення відправленого замовлення.
     /// </summary>
-    /// <returns>true, якщо замовлення валідне; інакше false.</returns>
-    public bool IsValid()
+    /// <param name="returnDate">Дата та час повернення.</param>
+    public void Return(DateTime returnDate)
     {
-        if (Id != null && Id != string.Empty
-            && CustomerName != null && CustomerName.Length > MinCustomerNameLength
-            && _lines.Count > 0 && _lines.Count < MaxLineCount
-            && Status >= StatusNew && Status <= StatusCancelled)
+        if (Status != OrderStatus.Shipped || ShippedAt == null)
         {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// Формує текстовий звіт за всіма позиціями замовлення.
-    /// </summary>
-    /// <returns>Рядок із роздруком товарів та підсумковою сумою.</returns>
-    public string BuildReport()
-    {
-        string s = string.Empty;
-        for (int i = 0; i < _lines.Count; i++)
-        {
-            s = s + "Товар: " + _lines[i][0] + "; кількість: " + _lines[i][1]
-                + "; ціна: " + _lines[i][2] + "; сума: "
-                + (int.Parse(_lines[i][1]) * decimal.Parse(_lines[i][2])) + "\n";
+            throw new InvalidOperationException("Повернути можна лише відправлене замовлення зі статусом Shipped.");
         }
 
-        s = s + "Разом: " + CalculateTotal(false) + "\n";
-        return s;
+        if ((returnDate - ShippedAt.Value).TotalDays > 14)
+        {
+            throw new InvalidOperationException("Термін повернення товару (14 днів із дати відправлення) вичерпано.");
+        }
+
+        Status = OrderStatus.Returned;
     }
 }
