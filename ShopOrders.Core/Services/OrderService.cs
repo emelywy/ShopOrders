@@ -10,33 +10,40 @@ public sealed class OrderService
 {
     private readonly IOrderRepository _repository;
     private readonly IPricingPolicy _pricing;
+    private readonly INotifier _notifier;
 
     /// <summary>
     /// Ініціалізує новий екземпляр класу <see cref="OrderService"/>.
     /// </summary>
     /// <param name="repository">Сховище замовлень.</param>
     /// <param name="pricing">Політика ціноутворення.</param>
-    public OrderService(IOrderRepository repository, IPricingPolicy pricing)
+    /// <param name="notifier">Сервіс сповіщень.</param>
+    public OrderService(IOrderRepository repository, IPricingPolicy pricing, INotifier notifier)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _pricing = pricing ?? throw new ArgumentNullException(nameof(pricing));
+        _notifier = notifier ?? throw new ArgumentNullException(nameof(notifier));
     }
 
     /// <summary>
-    /// Зберігає замовлення в системі.
+    /// Зберігає замовлення та сповіщає клієнта.
     /// </summary>
     /// <param name="order">Екземпляр замовлення.</param>
-    public void Place(Order order)
+    /// <param name="customerEmail">Електронна пошта для сповіщення.</param>
+    public void Place(Order order, string customerEmail)
     {
         ArgumentNullException.ThrowIfNull(order);
+
         _repository.Add(order);
+        decimal total = TotalOf(order);
+        _notifier.Notify(customerEmail, $"Замовлення #{order.Id} оформлено на суму: {total:0.00}");
     }
 
     /// <summary>
-    /// Розраховує загальну вартість замовлення за обраною політикою.
+    /// Розраховує загальну вартість замовлення за поточною політикою.
     /// </summary>
     /// <param name="order">Екземпляр замовлення.</param>
-    /// <returns>Загальна вартість замовлення.</returns>
+    /// <returns>Загальна вартість.</returns>
     public decimal TotalOf(Order order)
     {
         ArgumentNullException.ThrowIfNull(order);
