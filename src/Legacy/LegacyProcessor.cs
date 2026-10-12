@@ -52,6 +52,18 @@ public class OrderLineItem
     public string Group = "";
 }
 
+public sealed record OrderProcessRequest(
+    int DocId,
+    int ClientId,
+    string ClientName,
+    string? ClientMail,
+    string ClientKind,
+    int ClientDone,
+    List<OrderLineItem>? Items,
+    string State,
+    string Currency,
+    bool SendMail);
+
 public sealed class OrderReportBuilder
 {
     public string Build(int docId, string clientName, List<OrderLineItem> items, decimal discount, decimal shipping, decimal total, string currency)
@@ -75,6 +87,22 @@ public sealed class OrderReportBuilder
 public class LegacyOrderProcessor
 {
     private readonly List<string> _log = new();
+
+    public string Handle(OrderProcessRequest req)
+    {
+        return Handle(
+            req.DocId,
+            req.ClientId,
+            req.ClientName,
+            req.ClientMail,
+            req.ClientKind,
+            req.ClientDone,
+            req.Items,
+            req.State,
+            req.Currency,
+            DateTime.UtcNow,
+            req.SendMail);
+    }
 
     public string Handle(
         int docId,
