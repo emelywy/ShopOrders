@@ -102,4 +102,74 @@ public sealed class OrderService
 
         order.Pay();
     }
+
+#pragma warning disable CA1031, CA1822, CA2200, CS0168
+
+    /// <summary>
+    /// АНТИПАТЕРН 1: порожній catch, дефект зникає без сліду.
+    /// </summary>
+    /// <param name="orderId">Ідентифікатор замовлення.</param>
+    /// <returns>Знайдене замовлення або null.</returns>
+    public Order? Load(int orderId)
+    {
+        try
+        {
+            return _repository.GetById(orderId);
+        }
+        catch (Exception)
+        {
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// АНТИПАТЕРНИ 2 і 3: широке перехоплення Exception та стирання стека через throw ex.
+    /// </summary>
+    /// <param name="orderId">Ідентифікатор замовлення.</param>
+    /// <param name="reason">Причина скасування замовлення.</param>
+    public void Cancel(int orderId, string reason)
+    {
+        try
+        {
+            Order? order = _repository.GetById(orderId);
+            order?.Cancel();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Щось пішло не так: " + reason);
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// АНТИПАТЕРН 4: використання try/catch замість звичайної умови та TryParse.
+    /// </summary>
+    /// <param name="rows">Масив рядків зі значеннями кількості.</param>
+    /// <returns>Кількість валідних позицій.</returns>
+    public int CountValidQuantities(string[] rows)
+    {
+        ArgumentNullException.ThrowIfNull(rows);
+
+        int valid = 0;
+        foreach (string row in rows)
+        {
+            try
+            {
+                int q = int.Parse(row);
+                if (q > 0)
+                {
+                    valid++;
+                }
+            }
+            catch (FormatException)
+            {
+                // не число — пропускаємо
+            }
+        }
+
+        return valid;
+    }
+
+#pragma warning restore CA1031, CA1822, CA2200, CS0168
 }
