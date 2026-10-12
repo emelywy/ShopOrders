@@ -2,6 +2,7 @@ namespace ShopOrders.Core.Services;
 
 using ShopOrders.Core.Abstractions;
 using ShopOrders.Core.Domain;
+using ShopOrders.Core.Errors;
 using ShopOrders.Core.Orders;
 
 /// <summary>
@@ -76,5 +77,29 @@ public sealed class OrderService
         }
 
         order.AddLine(line);
+    }
+
+    /// <summary>
+    /// Проводить оплату замовлення.
+    /// </summary>
+    /// <param name="orderId">Ідентифікатор замовлення.</param>
+    /// <param name="amount">Сума оплати.</param>
+    public void Pay(int orderId, decimal amount)
+    {
+        Order order = _repository.GetById(orderId)
+            ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
+
+        if (order.Status != OrderStatus.New)
+        {
+            throw new DomainRuleException("order.payable", $"Стан {order.Status} не дозволяє оплату.");
+        }
+
+        decimal requiredTotal = TotalOf(order);
+        if (amount < requiredTotal)
+        {
+            throw new DomainRuleException("order.amount", $"Сплачено {amount:0.00}, потрібно {requiredTotal:0.00}.");
+        }
+
+        order.Pay();
     }
 }
