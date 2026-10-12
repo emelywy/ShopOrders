@@ -48,35 +48,27 @@ public class LegacyOrderProcessor
         DateTime createdAt,
         bool sendMail)
     {
-        if (items != null)
-        {
-            if (items.Count > 0)
-            {
-                if (state == "new" || state == "paid")
-                {
-                    if (clientMail != null && clientMail.Contains("@"))
-                    {
-                        _log.Add("ok " + docId);
-                    }
-                    else
-                    {
-                        return "ERR: mail";
-                    }
-                }
-                else
-                {
-                    return "ERR: state";
-                }
-            }
-            else
-            {
-                return "ERR: empty";
-            }
-        }
-        else
+        if (items == null)
         {
             return "ERR: null";
         }
+
+        if (items.Count == 0)
+        {
+            return "ERR: empty";
+        }
+
+        if (state != "new" && state != "paid")
+        {
+            return "ERR: state";
+        }
+
+        if (clientMail == null || !clientMail.Contains("@"))
+        {
+            return "ERR: mail";
+        }
+
+        _log.Add("ok " + docId);
 
         decimal tmpSum = 0m;
         for (int i = 0; i < items.Count; i++)
