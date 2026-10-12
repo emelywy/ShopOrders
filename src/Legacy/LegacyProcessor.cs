@@ -1,5 +1,7 @@
 #nullable enable
 
+using System.Text;
+
 namespace Variant.Legacy;
 
 public static class PricingRules
@@ -50,6 +52,26 @@ public class OrderLineItem
     public string Group = "";
 }
 
+public sealed class OrderReportBuilder
+{
+    public string Build(int docId, string clientName, List<OrderLineItem> items, decimal discount, decimal shipping, decimal total, string currency)
+    {
+        var sb = new StringBuilder();
+        sb.Append("Документ #").Append(docId).Append('\n');
+        sb.Append("Клієнт: ").Append(clientName).Append('\n');
+        foreach (var it in items)
+        {
+            sb.Append(it.Code).Append(" x").Append(it.Qty).Append(" = ")
+              .Append((it.Qty * it.Price).ToString("0.00")).Append(' ').Append(currency).Append('\n');
+        }
+
+        sb.Append("Знижка: ").Append(discount.ToString("0.00")).Append(' ').Append(currency).Append('\n');
+        sb.Append("Доставка: ").Append(shipping.ToString("0.00")).Append(' ').Append(currency).Append('\n');
+        sb.Append("Разом: ").Append(total.ToString("0.00")).Append(' ').Append(currency).Append('\n');
+        return sb.ToString();
+    }
+}
+
 public class LegacyOrderProcessor
 {
     private readonly List<string> _log = new();
@@ -94,17 +116,8 @@ public class LegacyOrderProcessor
         decimal ship = CalculateShipping(tmpSum - tmpDiscount);
         decimal total = tmpSum - tmpDiscount + ship;
 
-        string txt = "Документ #" + docId + "\n";
-        txt += "Клієнт: " + clientName + "\n";
-        for (int i = 0; i < items.Count; i++)
-        {
-            txt += items[i].Code + " x" + items[i].Qty + " = " +
-                (items[i].Qty * items[i].Price).ToString("0.00") + " " + currency + "\n";
-        }
-
-        txt += "Знижка: " + tmpDiscount.ToString("0.00") + " " + currency + "\n";
-        txt += "Доставка: " + ship.ToString("0.00") + " " + currency + "\n";
-        txt += "Разом: " + total.ToString("0.00") + " " + currency + "\n";
+        var reportBuilder = new OrderReportBuilder();
+        string txt = reportBuilder.Build(docId, clientName, items, tmpDiscount, ship, total, currency);
 
         if (sendMail)
         {
