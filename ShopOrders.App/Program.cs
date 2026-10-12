@@ -1,40 +1,48 @@
-using ShopOrders.Core.Abstractions;
+using System.Text;
+using ShopOrders.App;
 using ShopOrders.Core.Domain;
+using ShopOrders.Core.Errors;
 using ShopOrders.Core.Services;
 
-// 1. Налаштування політик через словник (OCP замість if/else)
-string customerType = "vip";
+Console.OutputEncoding = Encoding.UTF8;
+Console.InputEncoding = Encoding.UTF8;
 
-var policies = new Dictionary<string, IPricingPolicy>
+Console.WriteLine("Демонстрація безпечного вводу");
+
+InMemoryOrderRepository repository = new InMemoryOrderRepository();
+DiscountPricingPolicy pricing = new DiscountPricingPolicy(0.10m);
+ConsoleNotifier notifier = new ConsoleNotifier();
+OrderService service = new OrderService(repository, pricing, notifier);
+
+// Створюємо демонстраційне замовлення
+Order order = new Order(1, 101, DateOnly.FromDateTime(DateTime.Today));
+repository.Add(order);
+
+while (true)
 {
-    ["standard"] = new StandardPricingPolicy(),
-    ["regular"] = new DiscountPricingPolicy(0.05m),
-    ["vip"] = new VipPricingPolicy(),
-    ["staff"] = new DiscountPricingPolicy(0.30m),
-};
+    Console.WriteLine("\nВведіть дані позиції замовлення:");
+    Console.Write("Артикул (SKU) (або 'exit' для завершення): ");
+    string? sku = Console.ReadLine();
+    if (string.Equals(sku, "exit", StringComparison.OrdinalIgnoreCase))
+    {
+        break;
+    }
 
-IPricingPolicy selectedPolicy = policies.TryGetValue(customerType, out var policy)
-    ? policy
-    : new StandardPricingPolicy();
+    Console.Write("Кількість: ");
+    string? qty = Console.ReadLine();
 
-// 2. Збирання залежностей (DIP без контейнера)
-var repository = new InMemoryOrderRepository();
-var notifier = new ConsoleNotifier();
-var service = new OrderService(repository, selectedPolicy, notifier);
+    Console.Write("Ціна: ");
+    string? price = Console.ReadLine();
 
-// 3. Робота з агрегатом
-var order = new Order(1, 100, DateOnly.FromDateTime(DateTime.Today));
-order.AddLine(new OrderLine("SKU-1", 2, 250m));
+    Result<OrderLine> parsed = OrderLineParser.Parse(sku ?? string.Empty, qty ?? string.Empty, price ?? string.Empty);
+    if (!parsed.IsSuccess)
+    {
+        Console.WriteLine($"Помилка вводу: {parsed.Error}");
+        Console.WriteLine("Будь ласка, повторіть введення з коректними даними.");
+        continue;
+    }
 
-service.Place(order, "client@example.com");
-
-Console.WriteLine($"Сума: {service.TotalOf(order):0.00}");
-
-// 4. Демонстрація LSP (композиція для архіву)
-var archived = new ArchivedOrder(order, DateOnly.FromDateTime(DateTime.Today));
-Console.WriteLine($"Замовлення #{archived.Id} успішно заархівовано.");
-
-// 5. Демонстрація SRP (звіт окремо)
-string csv = OrderCsvReport.BuildCsv(repository.GetAll());
-Console.WriteLine("CSV звіт:");
-Console.Write(csv);
+    service.AddLine(order.Id, parsed.Value!);
+    Console.WriteLine($"Позицію успішно додано! Загальна кількість позицій у замовленні: {order.Lines.Count}");
+    break;
+}
