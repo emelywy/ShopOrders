@@ -2,6 +2,7 @@ namespace ShopOrders.Core.Services;
 
 using ShopOrders.Core.Abstractions;
 using ShopOrders.Core.Domain;
+using ShopOrders.Core.Orders;
 
 /// <summary>
 /// Прикладний сервіс для оформлення та розрахунку вартості замовлень.
@@ -55,5 +56,25 @@ public sealed class OrderService
         }
 
         return total;
+    }
+
+    /// <summary>
+    /// Додає новий рядок до існуючого замовлення.
+    /// </summary>
+    /// <param name="orderId">Ідентифікатор замовлення.</param>
+    /// <param name="line">Типізований рядок замовлення.</param>
+    public void AddLine(int orderId, OrderLine line)
+    {
+        ArgumentNullException.ThrowIfNull(line);
+
+        Order order = _repository.GetById(orderId)
+            ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
+
+        if (order.Status != OrderStatus.New)
+        {
+            throw new DomainRuleException("order.editable", "Редагувати можна лише нове замовлення.");
+        }
+
+        order.AddLine(line);
     }
 }
