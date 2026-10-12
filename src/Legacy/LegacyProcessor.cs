@@ -21,6 +21,25 @@ public class ShopCustomer
     public string Kind = "regular";
     public int DoneCount;
     public DateTime SinceUtc;
+
+    public string Describe()
+    {
+        string s = Name.Trim().ToUpper();
+        if (Kind == "vip")
+        {
+            s += " [VIP]";
+        }
+
+        if (DoneCount > PricingRules.LoyalOrders)
+        {
+            s += " [ЛОЯЛЬНИЙ]";
+        }
+
+        s += " <" + Email.ToLower() + ">";
+        int years = DateTime.Now.Year - SinceUtc.Year;
+        s += " стаж " + years;
+        return s;
+    }
 }
 
 public class OrderLineItem
@@ -103,24 +122,7 @@ public class LegacyOrderProcessor
         return s - d + sh;
     }
 
-    public string DescribeClient(ShopCustomer c)
-    {
-        string s = c.Name.Trim().ToUpper();
-        if (c.Kind == "vip")
-        {
-            s += " [VIP]";
-        }
-
-        if (c.DoneCount > PricingRules.LoyalOrders)
-        {
-            s += " [ЛОЯЛЬНИЙ]";
-        }
-
-        s += " <" + c.Email.ToLower() + ">";
-        int years = DateTime.Now.Year - c.SinceUtc.Year;
-        s += " стаж " + years;
-        return s;
-    }
+    public string DescribeClient(ShopCustomer c) => c.Describe();
 
     public string DumpLog()
     {
