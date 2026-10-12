@@ -28,6 +28,27 @@ public sealed class OrderService
     }
 
     /// <summary>
+    /// замість важкого try/catch застосовуємо int.TryParse.
+    /// </summary>
+    /// <param name="rows">Масив рядків зі значеннями кількості.</param>
+    /// <returns>Кількість валідних позицій.</returns>
+    public static int CountValidQuantities(string[] rows)
+    {
+        ArgumentNullException.ThrowIfNull(rows);
+
+        int valid = 0;
+        foreach (string row in rows)
+        {
+            if (int.TryParse(row, out int q) && q > 0)
+            {
+                valid++;
+            }
+        }
+
+        return valid;
+    }
+
+    /// <summary>
     /// Зберігає замовлення та сповіщає клієнта.
     /// </summary>
     /// <param name="order">Екземпляр замовлення.</param>
@@ -103,73 +124,37 @@ public sealed class OrderService
         order.Pay();
     }
 
-#pragma warning disable CA1031, CA1822, CA2200, CS0168
-
     /// <summary>
-    /// АНТИПАТЕРН 1: порожній catch, дефект зникає без сліду.
+    ///  репозиторій повертає значення штатно,
+    /// ми не ковтаємо помилки сховища, а дозволяємо їм підніматися угору.
     /// </summary>
     /// <param name="orderId">Ідентифікатор замовлення.</param>
     /// <returns>Знайдене замовлення або null.</returns>
     public Order? Load(int orderId)
     {
-        try
-        {
-            return _repository.GetById(orderId);
-        }
-        catch (Exception)
-        {
-        }
-
-        return null;
+        return _repository.GetById(orderId);
     }
 
     /// <summary>
-    /// АНТИПАТЕРНИ 2 і 3: широке перехоплення Exception та стирання стека через throw ex.
+    ///  перехоплюємо конкретний тип збою сховища (IOException),
+    /// а замість 'throw ex' використовуємо 'throw;' для збереження первинного стека.
     /// </summary>
     /// <param name="orderId">Ідентифікатор замовлення.</param>
     /// <param name="reason">Причина скасування замовлення.</param>
     public void Cancel(int orderId, string reason)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(reason);
+
         try
         {
-            Order? order = _repository.GetById(orderId);
-            order?.Cancel();
+            Order order = _repository.GetById(orderId)
+                ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
+
+            order.Cancel();
         }
-        catch (Exception ex)
+        catch (IOException)
         {
-            Console.WriteLine("Щось пішло не так: " + reason);
-            throw ex;
+            throw;
         }
     }
-
-    /// <summary>
-    /// АНТИПАТЕРН 4: використання try/catch замість звичайної умови та TryParse.
-    /// </summary>
-    /// <param name="rows">Масив рядків зі значеннями кількості.</param>
-    /// <returns>Кількість валідних позицій.</returns>
-    public int CountValidQuantities(string[] rows)
-    {
-        ArgumentNullException.ThrowIfNull(rows);
-
-        int valid = 0;
-        foreach (string row in rows)
-        {
-            try
-            {
-                int q = int.Parse(row);
-                if (q > 0)
-                {
-                    valid++;
-                }
-            }
-            catch (FormatException)
-            {
-                // не число — пропускаємо
-            }
-        }
-
-        return valid;
-    }
-
-#pragma warning restore CA1031, CA1822, CA2200, CS0168
 }
