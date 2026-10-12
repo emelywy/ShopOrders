@@ -33,8 +33,6 @@ public class OrderLineItem
 
 public class LegacyOrderProcessor
 {
-    private decimal _tmpSum;
-    private decimal _tmpDiscount;
     private readonly List<string> _log = new();
 
     public string Handle(
@@ -80,45 +78,45 @@ public class LegacyOrderProcessor
             return "ERR: null";
         }
 
-        _tmpSum = 0m;
+        decimal tmpSum = 0m;
         for (int i = 0; i < items.Count; i++)
         {
-            _tmpSum += items[i].Qty * items[i].Price;
+            tmpSum += items[i].Qty * items[i].Price;
         }
 
-        _tmpDiscount = 0m;
+        decimal tmpDiscount = 0m;
         if (clientKind == "vip")
         {
-            _tmpDiscount = _tmpSum * PricingRules.VipRate;
-            if (_tmpDiscount > PricingRules.MaxDiscount)
+            tmpDiscount = tmpSum * PricingRules.VipRate;
+            if (tmpDiscount > PricingRules.MaxDiscount)
             {
-                _tmpDiscount = PricingRules.MaxDiscount;
+                tmpDiscount = PricingRules.MaxDiscount;
             }
         }
         else if (clientKind == "staff")
         {
-            _tmpDiscount = _tmpSum * PricingRules.StaffRate;
-            if (_tmpDiscount > PricingRules.MaxDiscount)
+            tmpDiscount = tmpSum * PricingRules.StaffRate;
+            if (tmpDiscount > PricingRules.MaxDiscount)
             {
-                _tmpDiscount = PricingRules.MaxDiscount;
+                tmpDiscount = PricingRules.MaxDiscount;
             }
         }
         else if (clientDone > PricingRules.LoyalOrders)
         {
-            _tmpDiscount = _tmpSum * PricingRules.LoyalRate;
-            if (_tmpDiscount > PricingRules.MaxDiscount)
+            tmpDiscount = tmpSum * PricingRules.LoyalRate;
+            if (tmpDiscount > PricingRules.MaxDiscount)
             {
-                _tmpDiscount = PricingRules.MaxDiscount;
+                tmpDiscount = PricingRules.MaxDiscount;
             }
         }
 
         decimal ship = 0m;
-        if (_tmpSum - _tmpDiscount < PricingRules.FreeShipFrom)
+        if (tmpSum - tmpDiscount < PricingRules.FreeShipFrom)
         {
             ship = PricingRules.ShipCost;
         }
 
-        decimal total = _tmpSum - _tmpDiscount + ship;
+        decimal total = tmpSum - tmpDiscount + ship;
 
         string txt = "Документ #" + docId + "\n";
         txt += "Клієнт: " + clientName + "\n";
@@ -128,7 +126,7 @@ public class LegacyOrderProcessor
                 (items[i].Qty * items[i].Price).ToString("0.00") + " " + currency + "\n";
         }
 
-        txt += "Знижка: " + _tmpDiscount.ToString("0.00") + " " + currency + "\n";
+        txt += "Знижка: " + tmpDiscount.ToString("0.00") + " " + currency + "\n";
         txt += "Доставка: " + ship.ToString("0.00") + " " + currency + "\n";
         txt += "Разом: " + total.ToString("0.00") + " " + currency + "\n";
 
