@@ -70,44 +70,9 @@ public class LegacyOrderProcessor
 
         _log.Add("ok " + docId);
 
-        decimal tmpSum = 0m;
-        for (int i = 0; i < items.Count; i++)
-        {
-            tmpSum += items[i].Qty * items[i].Price;
-        }
-
-        decimal tmpDiscount = 0m;
-        if (clientKind == "vip")
-        {
-            tmpDiscount = tmpSum * PricingRules.VipRate;
-            if (tmpDiscount > PricingRules.MaxDiscount)
-            {
-                tmpDiscount = PricingRules.MaxDiscount;
-            }
-        }
-        else if (clientKind == "staff")
-        {
-            tmpDiscount = tmpSum * PricingRules.StaffRate;
-            if (tmpDiscount > PricingRules.MaxDiscount)
-            {
-                tmpDiscount = PricingRules.MaxDiscount;
-            }
-        }
-        else if (clientDone > PricingRules.LoyalOrders)
-        {
-            tmpDiscount = tmpSum * PricingRules.LoyalRate;
-            if (tmpDiscount > PricingRules.MaxDiscount)
-            {
-                tmpDiscount = PricingRules.MaxDiscount;
-            }
-        }
-
-        decimal ship = 0m;
-        if (tmpSum - tmpDiscount < PricingRules.FreeShipFrom)
-        {
-            ship = PricingRules.ShipCost;
-        }
-
+        decimal tmpSum = CalculateSubtotal(items);
+        decimal tmpDiscount = CalculateDiscount(tmpSum, clientKind, clientDone);
+        decimal ship = CalculateShipping(tmpSum - tmpDiscount);
         decimal total = tmpSum - tmpDiscount + ship;
 
         string txt = "Документ #" + docId + "\n";
@@ -202,4 +167,42 @@ public class LegacyOrderProcessor
 
         return r;
     }
+
+    private static decimal CalculateSubtotal(List<OrderLineItem> items)
+    {
+        decimal sum = 0m;
+        foreach (var it in items)
+        {
+            sum += it.Qty * it.Price;
+        }
+
+        return sum;
+    }
+
+    private static decimal CalculateDiscount(decimal sum, string clientKind, int clientDone)
+    {
+        decimal discount = 0m;
+        if (clientKind == "vip")
+        {
+            discount = sum * PricingRules.VipRate;
+        }
+        else if (clientKind == "staff")
+        {
+            discount = sum * PricingRules.StaffRate;
+        }
+        else if (clientDone > PricingRules.LoyalOrders)
+        {
+            discount = sum * PricingRules.LoyalRate;
+        }
+
+        if (discount > PricingRules.MaxDiscount)
+        {
+            discount = PricingRules.MaxDiscount;
+        }
+
+        return discount;
+    }
+
+    private static decimal CalculateShipping(decimal payable) =>
+        payable < PricingRules.FreeShipFrom ? PricingRules.ShipCost : 0m;
 }
