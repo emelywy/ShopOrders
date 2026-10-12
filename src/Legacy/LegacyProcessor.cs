@@ -97,44 +97,9 @@ public class LegacyOrderProcessor
 
     public decimal Preview(string clientKind, int clientDone, List<OrderLineItem> items)
     {
-        decimal s = 0m;
-        foreach (var it in items)
-        {
-            s += it.Qty * it.Price;
-        }
-
-        decimal d = 0m;
-        if (clientKind == "vip")
-        {
-            d = s * PricingRules.VipRate;
-            if (d > PricingRules.MaxDiscount)
-            {
-                d = PricingRules.MaxDiscount;
-            }
-        }
-        else if (clientKind == "staff")
-        {
-            d = s * PricingRules.StaffRate;
-            if (d > PricingRules.MaxDiscount)
-            {
-                d = PricingRules.MaxDiscount;
-            }
-        }
-        else if (clientDone > PricingRules.LoyalOrders)
-        {
-            d = s * PricingRules.LoyalRate;
-            if (d > PricingRules.MaxDiscount)
-            {
-                d = PricingRules.MaxDiscount;
-            }
-        }
-
-        decimal sh = 0m;
-        if (s - d < PricingRules.FreeShipFrom)
-        {
-            sh = PricingRules.ShipCost;
-        }
-
+        decimal s = CalculateSubtotal(items);
+        decimal d = CalculateDiscount(s, clientKind, clientDone);
+        decimal sh = CalculateShipping(s - d);
         return s - d + sh;
     }
 
