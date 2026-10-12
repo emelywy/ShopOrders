@@ -190,4 +190,19 @@ public sealed class OrderService
             }
         }
     }
+
+    /// <summary>
+    /// Експортує звіт замовлення у файл із гарантованим звільненням ресурсу потоку.
+    /// </summary>
+    /// <param name="path">Шлях до вихідного файлу.</param>
+    /// <param name="order">Екземпляр замовлення.</param>
+    public void ExportReport(string path, Order order)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentNullException.ThrowIfNull(order);
+
+        using StreamWriter writer = new(path);
+        writer.WriteLine($"Замовлення #{order.Id}");
+        writer.WriteLine($"Сума: {TotalOf(order):0.00}");
+    }
 }

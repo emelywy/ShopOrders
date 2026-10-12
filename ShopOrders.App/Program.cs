@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using ShopOrders.App;
 using ShopOrders.Core.Domain;
 using ShopOrders.Core.Errors;
+using ShopOrders.Core.Reporting;
 using ShopOrders.Core.Services;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -58,4 +59,10 @@ static void RunApplication(ILoggerFactory factory)
     // Демонстрація логування оплати з Warning та Information
     // Сума замовлення: 2 * 149.50 - 10% = 269.10; платимо 300 (виникне Warning про переплату)
     service.Pay(order.Id, 300.00m);
+    // Демонстрація безпечного файлового аудиту через using
+    using (FileAuditLog audit = new("audit.log"))
+    {
+        audit.Write("ADD_LINE", order.Id);
+        audit.Write("PAY_ORDER", order.Id);
+    } // Тут Dispose викликається автоматично і закриває файл
 }
