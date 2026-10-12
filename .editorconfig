@@ -78,3 +78,6 @@ dotnet_analyzer_diagnostic.severity = none
 # Логи лабораторної 5
 *.log
 audit.log
+
+[**/Legacy/**.cs]
+generated_code = true
