@@ -1,5 +1,6 @@
 namespace Var01.Tests;
 
+using Microsoft.Extensions.Logging.Abstractions;
 using ShopOrders.Core.Abstractions;
 using ShopOrders.Core.Domain;
 using ShopOrders.Core.Services;
@@ -41,7 +42,11 @@ public class DomainInvariantTests
         IOrderRepository repository = new InMemoryOrderRepository();
         IPricingPolicy pricing = new DiscountPricingPolicy(0.10m);
         INotifier notifier = new ConsoleNotifier();
-        OrderService service = new OrderService(repository, pricing, notifier);
+        OrderService service = new OrderService(
+            repository,
+            pricing,
+            notifier,
+            NullLogger<OrderService>.Instance);
 
         Order order = NewOrder(2);
         order.AddLine(new OrderLine("SKU-1", 2, 100m));

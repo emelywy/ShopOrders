@@ -1,5 +1,6 @@
 namespace ShopOrders.Core.Services;
 
+using Microsoft.Extensions.Logging;
 using ShopOrders.Core.Abstractions;
 using ShopOrders.Core.Domain;
 using ShopOrders.Core.Errors;
@@ -13,6 +14,7 @@ public sealed class OrderService
     private readonly IOrderRepository _repository;
     private readonly IPricingPolicy _pricing;
     private readonly INotifier _notifier;
+    private readonly ILogger<OrderService> _log;
 
     /// <summary>
     /// Ініціалізує новий екземпляр класу <see cref="OrderService"/>.
@@ -20,15 +22,21 @@ public sealed class OrderService
     /// <param name="repository">Сховище замовлень.</param>
     /// <param name="pricing">Політика ціноутворення.</param>
     /// <param name="notifier">Сервіс сповіщень.</param>
-    public OrderService(IOrderRepository repository, IPricingPolicy pricing, INotifier notifier)
+    /// <param name="log">Екземпляр логера.</param>
+    public OrderService(
+        IOrderRepository repository,
+        IPricingPolicy pricing,
+        INotifier notifier,
+        ILogger<OrderService> log)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _pricing = pricing ?? throw new ArgumentNullException(nameof(pricing));
         _notifier = notifier ?? throw new ArgumentNullException(nameof(notifier));
+        _log = log ?? throw new ArgumentNullException(nameof(log));
     }
 
     /// <summary>
-    /// замість важкого try/catch застосовуємо int.TryParse.
+    /// Розраховує кількість валідних позицій у масиві рядків.
     /// </summary>
     /// <param name="rows">Масив рядків зі значеннями кількості.</param>
     /// <returns>Кількість валідних позицій.</returns>
@@ -57,9 +65,14 @@ public sealed class OrderService
     {
         ArgumentNullException.ThrowIfNull(order);
 
-        _repository.Add(order);
-        decimal total = TotalOf(order);
-        _notifier.Notify(customerEmail, $"Замовлення #{order.Id} оформлено на суму: {total:0.00}");
+        using (_log.BeginScope("Order:{OrderId}", order.Id))
+        {
+            _log.LogDebug("Початок оформлення замовлення для {CustomerEmail}", customerEmail);
+            _repository.Add(order);
+            decimal total = TotalOf(order);
+            _notifier.Notify(customerEmail, $"Замовлення #{order.Id} оформлено на суму: {total:0.00}");
+            _log.LogInformation("Замовлення успішно оформлено на суму {Total}", total);
+        }
     }
 
     /// <summary>
@@ -89,15 +102,21 @@ public sealed class OrderService
     {
         ArgumentNullException.ThrowIfNull(line);
 
-        Order order = _repository.GetById(orderId)
-            ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
-
-        if (order.Status != OrderStatus.New)
+        using (_log.BeginScope("Order:{OrderId}", orderId))
         {
-            throw new DomainRuleException("order.editable", "Редагувати можна лише нове замовлення.");
-        }
+            _log.LogDebug("Спроба додати позицію: SKU {Sku}, кількість {Quantity}", line.Sku, line.Quantity);
 
-        order.AddLine(line);
+            Order order = _repository.GetById(orderId)
+                ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
+
+            if (order.Status != OrderStatus.New)
+            {
+                throw new DomainRuleException("order.editable", "Редагувати можна лише нове замовлення.");
+            }
+
+            order.AddLine(line);
+            _log.LogInformation("Позицію {Sku} успішно додано до замовлення", line.Sku);
+        }
     }
 
     /// <summary>
@@ -107,26 +126,36 @@ public sealed class OrderService
     /// <param name="amount">Сума оплати.</param>
     public void Pay(int orderId, decimal amount)
     {
-        Order order = _repository.GetById(orderId)
-            ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
-
-        if (order.Status != OrderStatus.New)
+        using (_log.BeginScope("Order:{OrderId}", orderId))
         {
-            throw new DomainRuleException("order.payable", $"Стан {order.Status} не дозволяє оплату.");
-        }
+            _log.LogDebug("Початок оплати, сума {Amount}", amount);
 
-        decimal requiredTotal = TotalOf(order);
-        if (amount < requiredTotal)
-        {
-            throw new DomainRuleException("order.amount", $"Сплачено {amount:0.00}, потрібно {requiredTotal:0.00}.");
-        }
+            Order order = _repository.GetById(orderId)
+                ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
 
-        order.Pay();
+            if (order.Status != OrderStatus.New)
+            {
+                throw new DomainRuleException("order.payable", $"Стан {order.Status} не дозволяє оплату.");
+            }
+
+            decimal requiredTotal = TotalOf(order);
+            if (amount < requiredTotal)
+            {
+                throw new DomainRuleException("order.amount", $"Сплачено {amount:0.00}, потрібно {requiredTotal:0.00}.");
+            }
+
+            if (amount > requiredTotal)
+            {
+                _log.LogWarning("Виявлено переплату: {Extra}", amount - requiredTotal);
+            }
+
+            order.Pay();
+            _log.LogInformation("Оплачено на суму {Amount}", amount);
+        }
     }
 
     /// <summary>
-    ///  репозиторій повертає значення штатно,
-    /// ми не ковтаємо помилки сховища, а дозволяємо їм підніматися угору.
+    /// Завантажує замовлення зі сховища.
     /// </summary>
     /// <param name="orderId">Ідентифікатор замовлення.</param>
     /// <returns>Знайдене замовлення або null.</returns>
@@ -136,8 +165,7 @@ public sealed class OrderService
     }
 
     /// <summary>
-    ///  перехоплюємо конкретний тип збою сховища (IOException),
-    /// а замість 'throw ex' використовуємо 'throw;' для збереження первинного стека.
+    /// Скасовує замовлення із фіксацією помилок у журналі.
     /// </summary>
     /// <param name="orderId">Ідентифікатор замовлення.</param>
     /// <param name="reason">Причина скасування замовлення.</param>
@@ -145,16 +173,21 @@ public sealed class OrderService
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(reason);
 
-        try
+        using (_log.BeginScope("Order:{OrderId}", orderId))
         {
-            Order order = _repository.GetById(orderId)
-                ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
+            try
+            {
+                Order order = _repository.GetById(orderId)
+                    ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
 
-            order.Cancel();
-        }
-        catch (IOException)
-        {
-            throw;
+                order.Cancel();
+                _log.LogInformation("Замовлення скасовано через: {Reason}", reason);
+            }
+            catch (IOException ex)
+            {
+                _log.LogError(ex, "Збій сховища при спробі скасування замовлення {OrderId}", orderId);
+                throw;
+            }
         }
     }
 }
