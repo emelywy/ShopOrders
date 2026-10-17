@@ -67,11 +67,19 @@ public sealed class OrderService
 
         using (_log.BeginScope("Order:{OrderId}", order.Id))
         {
-            _log.LogDebug("Початок оформлення замовлення для {CustomerEmail}", customerEmail);
+            if (_log.IsEnabled(LogLevel.Debug))
+            {
+                _log.LogDebug("Початок оформлення замовлення для {CustomerEmail}", customerEmail);
+            }
+
             _repository.Add(order);
             decimal total = TotalOf(order);
             _notifier.Notify(customerEmail, $"Замовлення #{order.Id} оформлено на суму: {total:0.00}");
-            _log.LogInformation("Замовлення успішно оформлено на суму {Total}", total);
+
+            if (_log.IsEnabled(LogLevel.Information))
+            {
+                _log.LogInformation("Замовлення успішно оформлено на суму {Total}", total);
+            }
         }
     }
 
@@ -104,7 +112,10 @@ public sealed class OrderService
 
         using (_log.BeginScope("Order:{OrderId}", orderId))
         {
-            _log.LogDebug("Спроба додати позицію: SKU {Sku}, кількість {Quantity}", line.Sku, line.Quantity);
+            if (_log.IsEnabled(LogLevel.Debug))
+            {
+                _log.LogDebug("Спроба додати позицію: SKU {Sku}, кількість {Quantity}", line.Sku, line.Quantity);
+            }
 
             Order order = _repository.GetById(orderId)
                 ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
@@ -115,7 +126,11 @@ public sealed class OrderService
             }
 
             order.AddLine(line);
-            _log.LogInformation("Позицію {Sku} успішно додано до замовлення", line.Sku);
+
+            if (_log.IsEnabled(LogLevel.Information))
+            {
+                _log.LogInformation("Позицію {Sku} успішно додано до замовлення", line.Sku);
+            }
         }
     }
 
@@ -128,7 +143,10 @@ public sealed class OrderService
     {
         using (_log.BeginScope("Order:{OrderId}", orderId))
         {
-            _log.LogDebug("Початок оплати, сума {Amount}", amount);
+            if (_log.IsEnabled(LogLevel.Debug))
+            {
+                _log.LogDebug("Початок оплати, сума {Amount}", amount);
+            }
 
             Order order = _repository.GetById(orderId)
                 ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
@@ -144,13 +162,17 @@ public sealed class OrderService
                 throw new DomainRuleException("order.amount", $"Сплачено {amount:0.00}, потрібно {requiredTotal:0.00}.");
             }
 
-            if (amount > requiredTotal)
+            if (amount > requiredTotal && _log.IsEnabled(LogLevel.Warning))
             {
                 _log.LogWarning("Виявлено переплату: {Extra}", amount - requiredTotal);
             }
 
             order.Pay();
-            _log.LogInformation("Оплачено на суму {Amount}", amount);
+
+            if (_log.IsEnabled(LogLevel.Information))
+            {
+                _log.LogInformation("Оплачено на суму {Amount}", amount);
+            }
         }
     }
 
@@ -181,11 +203,19 @@ public sealed class OrderService
                     ?? throw new DomainRuleException("order.exists", $"Замовлення {orderId} не знайдено.");
 
                 order.Cancel();
-                _log.LogInformation("Замовлення скасовано через: {Reason}", reason);
+
+                if (_log.IsEnabled(LogLevel.Information))
+                {
+                    _log.LogInformation("Замовлення скасовано через: {Reason}", reason);
+                }
             }
             catch (IOException ex)
             {
-                _log.LogError(ex, "Збій сховища при спробі скасування замовлення {OrderId}", orderId);
+                if (_log.IsEnabled(LogLevel.Error))
+                {
+                    _log.LogError(ex, "Збій сховища при спробі скасування замовлення {OrderId}", orderId);
+                }
+
                 throw;
             }
         }
