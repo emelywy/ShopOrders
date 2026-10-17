@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+
 namespace ShopOrders.Core.Reporting;
 
 /// <summary>
@@ -5,7 +8,7 @@ namespace ShopOrders.Core.Reporting;
 /// </summary>
 public sealed class DocumentReportPrinter
 {
-    private readonly TextWriter output;
+    private readonly TextWriter _output; // 1. Додано підкреслення
 
     /// <summary>
     /// Ініціалізує новий екземпляр принтера звіту.
@@ -14,7 +17,7 @@ public sealed class DocumentReportPrinter
     public DocumentReportPrinter(TextWriter output)
     {
         ArgumentNullException.ThrowIfNull(output);
-        this.output = output;
+        _output = output; // 2. Прибрано this.
     }
 
     /// <summary>
@@ -24,6 +27,6 @@ public sealed class DocumentReportPrinter
     public void Print(string report)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(report);
-        this.output.Write(report);
+        _output.Write(report); // 3. Прибрано this.
     }
 }
