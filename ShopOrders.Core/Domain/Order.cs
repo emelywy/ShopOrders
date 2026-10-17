@@ -111,6 +111,7 @@ public sealed class Order
         }
 
         Status = OrderStatus.Shipped;
+
         ShippedAt = DateTime.UtcNow;
     }
 
