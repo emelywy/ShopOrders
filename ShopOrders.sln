@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -42,10 +41,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		ci.yml = ci.yml
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopOrders.App", "ShopOrders.App\ShopOrders.App.csproj", "{6CFD3337-B0AD-409D-9001-78BAF34B87A4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopOrders.Core", "ShopOrders.Core\ShopOrders.Core.csproj", "{429AC85D-1ED1-4D3F-819C-D33A94FE66C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopOrders.App", "ShopOrders.App\ShopOrders.App.csproj", "{6CFD3337-B0AD-409D-9001-78BAF34B87A4}"
 EndProject
