@@ -1,3 +1,5 @@
+<!-- Налаштування для CI -->
+
 root = true
 [*]
 charset = utf-8
