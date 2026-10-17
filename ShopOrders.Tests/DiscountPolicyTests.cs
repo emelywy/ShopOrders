@@ -5,135 +5,54 @@ using Xunit;
 namespace ShopOrders.Tests;
 
 /// <summary>
-/// Тести для перевірки логіки
+/// Тести для перевірки логіки розрахунку знижок.
 /// </summary>
 public class DiscountPolicyTests
 {
     /// <summary>
-    /// Тест 1:Неправильний
+    /// Перевіряє розрахунок знижки для різних класів еквівалентності та межових значень.
     /// </summary>
-    [Fact]
-    public void DiscountFor_NegativeAmount_Throws()
+    /// <param name="amount">Сума замовлення (передається як double).</param>
+    /// <param name="isRegular">Чи є клієнт постійним.</param>
+    /// <param name="expected">Очікувана знижка (передається як double).</param>
+    [Theory]
+    [InlineData(0, false, 0)]
+    [InlineData(400, true, 20)]
+    [InlineData(999.99, false, 0)]
+    [InlineData(999.99, true, 50)]
+    [InlineData(1000, false, 100)]
+    [InlineData(1000, true, 150)]
+    [InlineData(5000, false, 500)]
+    public void DiscountFor_Boundaries_MatchesTable(double amount, bool isRegular, double expected)
     {
         // Arrange
         var policy = new DiscountPolicy();
 
         // Act
-        Action act = () => policy.DiscountFor(-0.01m, true);
+        decimal actual = policy.DiscountFor((decimal)amount, isRegular);
 
         // Assert
-        Assert.Throws<ArgumentOutOfRangeException>("amount", act);
+        Assert.Equal((decimal)expected, actual);
     }
 
     /// <summary>
-    /// Тест 2:Нижня межа.
+    /// Перевіряє, що від'ємна сума викликає виняток із правильним іменем параметра.
     /// </summary>
-    [Fact]
-    public void DiscountFor_ZeroAmount_ReturnsZero()
+    /// <param name="amount">Від'ємна сума замовлення.</param>
+    [Theory]
+    [InlineData(-0.01)]
+    [InlineData(-50.00)]
+    [InlineData(-1000)]
+    public void DiscountFor_NegativeAmount_ThrowsOutOfRange(double amount)
     {
         // Arrange
         var policy = new DiscountPolicy();
 
         // Act
-        decimal actual = policy.DiscountFor(0m, false);
+        Action act = () => policy.DiscountFor((decimal)amount, true);
 
         // Assert
-        Assert.Equal(0.00m, actual);
-    }
-
-    /// <summary>
-    /// Тест 3: Звичайне замовлення.
-    /// </summary>
-    [Fact]
-    public void DiscountFor_SmallOrderRegularCustomer_ReturnsRegularDiscount()
-    {
-        // Arrange
-        var policy = new DiscountPolicy();
-
-        // Act
-        decimal actual = policy.DiscountFor(400m, true);
-
-        // Assert
-        Assert.Equal(20.00m, actual);
-    }
-
-    /// <summary>
-    /// Тест 4:Нижня межа
-    /// </summary>
-    [Fact]
-    public void DiscountFor_JustBelowBigOrder_ReturnsZero()
-    {
-        // Arrange
-        var policy = new DiscountPolicy();
-
-        // Act
-        decimal actual = policy.DiscountFor(999.99m, false);
-
-        // Assert
-        Assert.Equal(0.00m, actual);
-    }
-
-    /// <summary>
-    /// Тест 5:Верхня межа
-    /// </summary>
-    [Fact]
-    public void DiscountFor_BigOrderNewCustomer_ReturnsBigOrderDiscount()
-    {
-        // Arrange
-        var policy = new DiscountPolicy();
-
-        // Act
-        decimal actual = policy.DiscountFor(1000m, false);
-
-        // Assert
-        Assert.Equal(100.00m, actual);
-    }
-
-    /// <summary>
-    /// Тест 6:Верхня межа
-    /// </summary>
-    [Fact]
-    public void DiscountFor_BigOrderRegularCustomer_ReturnsCombinedDiscount()
-    {
-        // Arrange
-        var policy = new DiscountPolicy();
-
-        // Act
-        decimal actual = policy.DiscountFor(1000m, true);
-
-        // Assert
-        Assert.Equal(150.00m, actual);
-    }
-
-    /// <summary>
-    /// Тест: Некорректний вхід для нового клієнта.
-    /// </summary>
-    [Fact]
-    public void DiscountFor_NegativeAmountNewCustomer_Throws()
-    {
-        // Arrange
-        var policy = new DiscountPolicy();
-
-        // Act
-        Action act = () => policy.DiscountFor(-50m, false);
-
-        // Assert
-        Assert.Throws<ArgumentOutOfRangeException>("amount", act);
-    }
-
-    /// <summary>
-    /// Тест: Типове велике замовлення (середина класу еквівалентності).
-    /// </summary>
-    [Fact]
-    public void DiscountFor_TypicalBigOrder_ReturnsBigOrderDiscount()
-    {
-        // Arrange
-        var policy = new DiscountPolicy();
-
-        // Act
-        decimal actual = policy.DiscountFor(5000m, false);
-
-        // Assert
-        Assert.Equal(500.00m, actual);
+        var ex = Assert.Throws<ArgumentOutOfRangeException>(act);
+        Assert.Equal("amount", ex.ParamName); // Перевіряємо, що програма свариться саме на параметр amount
     }
 }
