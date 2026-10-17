@@ -55,4 +55,20 @@ public class DiscountPolicyTests
         var ex = Assert.Throws<ArgumentOutOfRangeException>(act);
         Assert.Equal("amount", ex.ParamName); // Перевіряємо, що програма свариться саме на параметр amount
     }
+
+    /// <summary>
+    /// Перевіряє, що знижка для величезного замовлення обмежується максимальним лімітом.
+    /// </summary>
+    [Fact]
+    public void DiscountFor_HugeOrder_IsCappedAtMax()
+    {
+        // Arrange
+        var policy = new DiscountPolicy();
+
+        // Act
+        decimal actual = policy.DiscountFor(5000m, true);
+
+        // Assert
+        Assert.Equal(150m, actual);
+    }
 }
