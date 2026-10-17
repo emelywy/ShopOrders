@@ -16,6 +16,9 @@ public sealed class DiscountPolicy
     /// <summary>Межа великого замовлення, грн.</summary>
     public const decimal BigOrderFrom = 1000m;
 
+    /// <summary>Максимальна сума знижки, грн.</summary>
+    public const decimal MaxDiscount = 150m;
+
     /// <summary>
     /// Розраховує знижку.
     /// </summary>
@@ -42,6 +45,12 @@ public sealed class DiscountPolicy
             rate += BigOrderRate;
         }
 
-        return decimal.Round(amount * rate, 2);
+        decimal discount = decimal.Round(amount * rate, 2);
+        if (discount > MaxDiscount)
+        {
+            discount = MaxDiscount;
+        }
+
+        return discount;
     }
 }

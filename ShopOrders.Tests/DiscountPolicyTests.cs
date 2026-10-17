@@ -22,7 +22,7 @@ public class DiscountPolicyTests
     [InlineData(999.99, true, 50)]
     [InlineData(1000, false, 100)]
     [InlineData(1000, true, 150)]
-    [InlineData(5000, false, 500)]
+    [InlineData(5000, false, 150)]
     public void DiscountFor_Boundaries_MatchesTable(double amount, bool isRegular, double expected)
     {
         // Arrange
