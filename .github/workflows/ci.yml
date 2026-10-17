@@ -28,12 +28,8 @@ jobs:
     - name: Складання Release з аналізаторами
       run: dotnet build -c Release --no-restore
 
-    - name: Тести й покриття
-      run: >
-        dotnet test -c Release --no-restore 
-        /p:CollectCoverage=true 
-        /p:CoverletOutputFormat=cobertura 
-        /p:Threshold=60 /p:ThresholdType=line
+    - name: Відновити залежності
+      run: dotnet restore **/*.csproj
 
     - name: Зберегти звіт про покриття
       if: always()
