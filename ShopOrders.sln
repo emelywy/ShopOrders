@@ -47,6 +47,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopOrders.App", "ShopOrder
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopOrders.Core", "ShopOrders.Core\ShopOrders.Core.csproj", "{429AC85D-1ED1-4D3F-819C-D33A94FE66C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopOrders.App", "ShopOrders.App\ShopOrders.App.csproj", "{6CFD3337-B0AD-409D-9001-78BAF34B87A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopOrders.Core", "ShopOrders.Core\ShopOrders.Core.csproj", "{429AC85D-1ED1-4D3F-819C-D33A94FE66C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
