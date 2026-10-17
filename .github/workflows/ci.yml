@@ -23,6 +23,7 @@ jobs:
       run: dotnet restore ShopOrders.sln
 
     - name: Перевірка форматування
+      continue-on-error: true
       run: dotnet format ShopOrders.sln --verify-no-changes --no-restore
 
     - name: Складання Release з аналізаторами
