@@ -1,3 +1,5 @@
+<!-- Налаштування для CI -->
+
 <Project>
   <PropertyGroup>
     <Nullable>enable</Nullable>
