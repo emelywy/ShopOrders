@@ -2,14 +2,18 @@
 
 <Project>
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ImplicitUsings>enable</ImplicitUsings>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>8.0-recommended</AnalysisLevel>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <VersionPrefix>0.8.0</VersionPrefix>
+    <Authors>Діана Андрощук</Authors>
+    <Product>ShopOrders</Product>
+    
     <NoWarn>$(NoWarn);SA1516;SA1515;SA1623;SA1642;CA1305;CA1848</NoWarn>
   </PropertyGroup>
 
@@ -20,3 +24,4 @@
     </PackageReference>
   </ItemGroup>
 </Project>
+
