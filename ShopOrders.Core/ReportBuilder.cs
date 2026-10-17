@@ -13,7 +13,6 @@ public sealed class ReportBuilder
     {
         ArgumentNullException.ThrowIfNull(rows);
         var text = new StringBuilder();
-        string brokenVariable = "тест зламаної збірки";
         text.AppendLine(Title.ToUpperInvariant());
         foreach (var row in rows)
         {

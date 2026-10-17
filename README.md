@@ -14,10 +14,3 @@ dotnet run --project ShopOrders.App
 в .editorconfig. Перевірка: dotnet format --verify-no-changes
 ## Автор
 Андрощук Діана, 471
-
-
-
-# ShopOrders
-![CI]https://github.com/emelywy/ShopOrders)
-
-Навчальний проєкт із дисципліни «Конструювання програмного забезпечення».
