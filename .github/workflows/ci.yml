@@ -20,16 +20,13 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Відновити залежності
-      run: dotnet restore
+      run: dotnet restore ShopOrders.sln
 
     - name: Перевірка форматування
-      run: dotnet format --verify-no-changes --no-restore
+      run: dotnet format ShopOrders.sln --verify-no-changes --no-restore
 
     - name: Складання Release з аналізаторами
-      run: dotnet build -c Release --no-restore
-
-    - name: Відновити залежності
-      run: dotnet restore **/*.csproj
+      run: dotnet build ShopOrders.sln -c Release --no-restore
 
     - name: Зберегти звіт про покриття
       if: always()
