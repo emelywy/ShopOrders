@@ -1,5 +1,6 @@
-namespace ShopOrders.Core.Domain;
 using ShopOrders.Core.Orders;
+
+namespace ShopOrders.Core.Domain;
 
 /// <summary>
 /// Статуси життєвого циклу замовлення інтернет-магазину.
