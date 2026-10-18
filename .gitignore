@@ -367,34 +367,6 @@ autom4te.cache/
 tarballs/
 test-results/
 *.dmg
-# УВАГА: Замість глобального *.app тут виключено лише збірки macOS бінарників, 
-# щоб не блокувати папки на кшталт ShopOrders.App у тєж проєкті:
-*.app/
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon\r
-._*
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
-*.stackdump
-[Dd]esktop.ini
-$RECYCLE.BIN/
-*.lnk
-*.swp
 
 # Власні винятки проєкту
 *.user
