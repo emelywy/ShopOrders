@@ -371,3 +371,8 @@ test-results/
 # Власні винятки проєкту
 *.user
 data/*.local.json
+
+# Секрети та локальні конфігурації
+appsettings.Local.json
+**/*.secrets.json
+.env

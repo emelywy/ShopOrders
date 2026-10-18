@@ -13,7 +13,8 @@
     <VersionPrefix>0.8.0</VersionPrefix>
     <Authors>Діана Андрощук</Authors>
     <Product>ShopOrders</Product>
-    
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
     <NoWarn>$(NoWarn);SA1516;SA1515;SA1623;SA1642;CA1305;CA1848</NoWarn>
   </PropertyGroup>
 
