@@ -58,11 +58,11 @@ static void RunApplication(ILoggerFactory factory)
 
     // Демонстрація логування оплати з Warning та Information
     service.Pay(order.Id, 300.00m);
-    
+
     // Демонстрація безпечного файлового аудиту через using
     using (FileAuditLog audit = new("audit.log"))
     {
         audit.Write("ADD_LINE", order.Id);
         audit.Write("PAY_ORDER", order.Id);
-    } 
+    }
 }
