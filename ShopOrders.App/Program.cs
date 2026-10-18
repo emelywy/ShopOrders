@@ -1,6 +1,5 @@
 using System.Text;
 using Microsoft.Extensions.Logging;
-using ShopOrders.App;
 using ShopOrders.Core;
 using ShopOrders.Core.Domain;
 using ShopOrders.Core.Errors;
