@@ -1,3 +1,5 @@
+// Виправлено стиль коду за вимогами аналізаторів
+
 using System;
 
 namespace ShopOrders.Core.Domain;
