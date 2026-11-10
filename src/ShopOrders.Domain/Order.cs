@@ -118,10 +118,9 @@ public sealed class Order
 
         if (amount < Total)
         {
-            throw new DomainRuleException(
-                RuleCodes.InsufficientPayment,
-                $"Внесено {amount:0.00} грн, до сплати {Total:0.00} грн, "
-                + $"бракує {Total - amount:0.00} грн.");
+            string message = $"Внесено {amount:0.00} грн, до сплати {Total:0.00} грн, "
+                + $"бракує {Total - amount:0.00} грн.";
+            throw new DomainRuleException(RuleCodes.InsufficientPayment, message);
         }
 
         Status = target;
