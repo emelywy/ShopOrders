@@ -113,6 +113,7 @@ public sealed class InputParserTests
 
     [Theory]
     [InlineData("1")]
+    [InlineData("7")]
     [InlineData("Returned")]
     public void ParseStatus_NumberOrUnknownName_Fails(string text)
     {
