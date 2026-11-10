@@ -376,3 +376,7 @@ data/*.local.json
 appsettings.Local.json
 **/*.secrets.json
 .env
+# Робочі файли застосунку й звіти покриття
+data/orders.json
+coverage/
+coveragereport/
