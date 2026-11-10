@@ -10,7 +10,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <VersionPrefix>0.9.0</VersionPrefix>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <Authors>Діана Андрощук</Authors>
     <Product>ShopOrders</Product>
     <!--
