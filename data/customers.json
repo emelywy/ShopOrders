@@ -1,0 +1,252 @@
+[
+  {
+    "id": 1,
+    "fullName": "Андрій М. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 2,
+    "fullName": "Марія Т. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 3,
+    "fullName": "Тарас С. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 4,
+    "fullName": "Ірина Л. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 5,
+    "fullName": "Богдан К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 6,
+    "fullName": "Софія М. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 7,
+    "fullName": "Максим Т. (тест)",
+    "status": "Vip"
+  },
+  {
+    "id": 8,
+    "fullName": "Катерина С. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 9,
+    "fullName": "Остап Л. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 10,
+    "fullName": "Олена К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 11,
+    "fullName": "Андрій М. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 12,
+    "fullName": "Марія Т. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 13,
+    "fullName": "Тарас С. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 14,
+    "fullName": "Ірина Л. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 15,
+    "fullName": "Богдан К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 16,
+    "fullName": "Софія М. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 17,
+    "fullName": "Максим Т. (тест)",
+    "status": "Vip"
+  },
+  {
+    "id": 18,
+    "fullName": "Катерина С. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 19,
+    "fullName": "Остап Л. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 20,
+    "fullName": "Олена К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 21,
+    "fullName": "Андрій М. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 22,
+    "fullName": "Марія Т. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 23,
+    "fullName": "Тарас С. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 24,
+    "fullName": "Ірина Л. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 25,
+    "fullName": "Богдан К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 26,
+    "fullName": "Софія М. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 27,
+    "fullName": "Максим Т. (тест)",
+    "status": "Vip"
+  },
+  {
+    "id": 28,
+    "fullName": "Катерина С. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 29,
+    "fullName": "Остап Л. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 30,
+    "fullName": "Олена К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 31,
+    "fullName": "Андрій М. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 32,
+    "fullName": "Марія Т. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 33,
+    "fullName": "Тарас С. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 34,
+    "fullName": "Ірина Л. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 35,
+    "fullName": "Богдан К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 36,
+    "fullName": "Софія М. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 37,
+    "fullName": "Максим Т. (тест)",
+    "status": "Vip"
+  },
+  {
+    "id": 38,
+    "fullName": "Катерина С. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 39,
+    "fullName": "Остап Л. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 40,
+    "fullName": "Олена К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 41,
+    "fullName": "Андрій М. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 42,
+    "fullName": "Марія Т. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 43,
+    "fullName": "Тарас С. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 44,
+    "fullName": "Ірина Л. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 45,
+    "fullName": "Богдан К. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 46,
+    "fullName": "Софія М. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 47,
+    "fullName": "Максим Т. (тест)",
+    "status": "Vip"
+  },
+  {
+    "id": 48,
+    "fullName": "Катерина С. (тест)",
+    "status": "Loyal"
+  },
+  {
+    "id": 49,
+    "fullName": "Остап Л. (тест)",
+    "status": "Standard"
+  },
+  {
+    "id": 50,
+    "fullName": "Олена К. (тест)",
+    "status": "Standard"
+  }
+]

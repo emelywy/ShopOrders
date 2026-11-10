@@ -1,0 +1,1802 @@
+[
+  {
+    "id": 1,
+    "customerId": 14,
+    "createdAt": "2026-09-06",
+    "status": "New",
+    "paidAt": null,
+    "discount": 222.75,
+    "lines": [
+      {
+        "sku": "SKU-108",
+        "quantity": 2,
+        "unitPrice": 1299.0
+      },
+      {
+        "sku": "SKU-119",
+        "quantity": 3,
+        "unitPrice": 619.0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "customerId": 27,
+    "createdAt": "2026-09-11",
+    "status": "Paid",
+    "paidAt": "2026-09-13T12:14:00+03:00",
+    "discount": 173.57,
+    "lines": [
+      {
+        "sku": "SKU-115",
+        "quantity": 3,
+        "unitPrice": 99.5
+      },
+      {
+        "sku": "SKU-126",
+        "quantity": 4,
+        "unitPrice": 159.0
+      },
+      {
+        "sku": "SKU-137",
+        "quantity": 5,
+        "unitPrice": 309.0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "customerId": 40,
+    "createdAt": "2026-09-16",
+    "status": "Paid",
+    "paidAt": "2026-09-16T13:21:00+03:00",
+    "discount": 296.02,
+    "lines": [
+      {
+        "sku": "SKU-122",
+        "quantity": 4,
+        "unitPrice": 259.0
+      },
+      {
+        "sku": "SKU-133",
+        "quantity": 5,
+        "unitPrice": 729.5
+      },
+      {
+        "sku": "SKU-144",
+        "quantity": 1,
+        "unitPrice": 1359.0
+      },
+      {
+        "sku": "SKU-155",
+        "quantity": 2,
+        "unitPrice": 679.0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "customerId": 3,
+    "createdAt": "2026-09-21",
+    "status": "Paid",
+    "paidAt": "2026-09-22T14:28:00+03:00",
+    "discount": 0.0,
+    "lines": [
+      {
+        "sku": "SKU-129",
+        "quantity": 5,
+        "unitPrice": 199.0
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "customerId": 16,
+    "createdAt": "2026-09-26",
+    "status": "Shipped",
+    "paidAt": "2026-09-28T15:35:00+03:00",
+    "discount": 26.15,
+    "lines": [
+      {
+        "sku": "SKU-136",
+        "quantity": 1,
+        "unitPrice": 129.5
+      },
+      {
+        "sku": "SKU-147",
+        "quantity": 2,
+        "unitPrice": 589.0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "customerId": 29,
+    "createdAt": "2026-10-01",
+    "status": "Shipped",
+    "paidAt": "2026-10-01T16:42:00+03:00",
+    "discount": 70.85,
+    "lines": [
+      {
+        "sku": "SKU-143",
+        "quantity": 2,
+        "unitPrice": 659.0
+      },
+      {
+        "sku": "SKU-154",
+        "quantity": 3,
+        "unitPrice": 529.5
+      },
+      {
+        "sku": "SKU-105",
+        "quantity": 4,
+        "unitPrice": 159.0
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "customerId": 42,
+    "createdAt": "2026-10-06",
+    "status": "Shipped",
+    "paidAt": "2026-10-07T17:49:00+03:00",
+    "discount": 51.79,
+    "lines": [
+      {
+        "sku": "SKU-150",
+        "quantity": 3,
+        "unitPrice": 199.0
+      },
+      {
+        "sku": "SKU-101",
+        "quantity": 4,
+        "unitPrice": 249.0
+      },
+      {
+        "sku": "SKU-112",
+        "quantity": 5,
+        "unitPrice": 89.5
+      },
+      {
+        "sku": "SKU-123",
+        "quantity": 1,
+        "unitPrice": 549.0
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "customerId": 5,
+    "createdAt": "2026-10-11",
+    "status": "Cancelled",
+    "paidAt": "2026-10-13T10:56:00+03:00",
+    "discount": 61.56,
+    "lines": [
+      {
+        "sku": "SKU-157",
+        "quantity": 4,
+        "unitPrice": 769.5
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "customerId": 18,
+    "createdAt": "2026-10-16",
+    "status": "Shipped",
+    "paidAt": "2026-10-16T11:03:00+03:00",
+    "discount": 52.23,
+    "lines": [
+      {
+        "sku": "SKU-104",
+        "quantity": 5,
+        "unitPrice": 189.0
+      },
+      {
+        "sku": "SKU-115",
+        "quantity": 1,
+        "unitPrice": 99.5
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "customerId": 31,
+    "createdAt": "2026-10-21",
+    "status": "New",
+    "paidAt": null,
+    "discount": 161.78,
+    "lines": [
+      {
+        "sku": "SKU-111",
+        "quantity": 1,
+        "unitPrice": 529.0
+      },
+      {
+        "sku": "SKU-122",
+        "quantity": 2,
+        "unitPrice": 259.0
+      },
+      {
+        "sku": "SKU-133",
+        "quantity": 3,
+        "unitPrice": 729.5
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "customerId": 44,
+    "createdAt": "2026-10-26",
+    "status": "New",
+    "paidAt": null,
+    "discount": 166.48,
+    "lines": [
+      {
+        "sku": "SKU-118",
+        "quantity": 2,
+        "unitPrice": 469.5
+      },
+      {
+        "sku": "SKU-129",
+        "quantity": 3,
+        "unitPrice": 199.0
+      },
+      {
+        "sku": "SKU-140",
+        "quantity": 4,
+        "unitPrice": 249.0
+      },
+      {
+        "sku": "SKU-151",
+        "quantity": 5,
+        "unitPrice": 159.5
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "customerId": 7,
+    "createdAt": "2026-10-31",
+    "status": "Paid",
+    "paidAt": "2026-10-31T14:24:00+02:00",
+    "discount": 43.35,
+    "lines": [
+      {
+        "sku": "SKU-125",
+        "quantity": 3,
+        "unitPrice": 289.0
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "customerId": 20,
+    "createdAt": "2026-11-05",
+    "status": "Paid",
+    "paidAt": "2026-11-06T15:31:00+02:00",
+    "discount": 346.04,
+    "lines": [
+      {
+        "sku": "SKU-132",
+        "quantity": 4,
+        "unitPrice": 1339.0
+      },
+      {
+        "sku": "SKU-143",
+        "quantity": 5,
+        "unitPrice": 659.0
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "customerId": 33,
+    "createdAt": "2026-09-01",
+    "status": "Paid",
+    "paidAt": "2026-09-03T16:38:00+03:00",
+    "discount": 27.89,
+    "lines": [
+      {
+        "sku": "SKU-139",
+        "quantity": 5,
+        "unitPrice": 139.5
+      },
+      {
+        "sku": "SKU-150",
+        "quantity": 1,
+        "unitPrice": 199.0
+      },
+      {
+        "sku": "SKU-101",
+        "quantity": 2,
+        "unitPrice": 249.0
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "customerId": 46,
+    "createdAt": "2026-09-06",
+    "status": "Shipped",
+    "paidAt": "2026-09-06T17:45:00+03:00",
+    "discount": 328.44,
+    "lines": [
+      {
+        "sku": "SKU-146",
+        "quantity": 1,
+        "unitPrice": 299.0
+      },
+      {
+        "sku": "SKU-157",
+        "quantity": 2,
+        "unitPrice": 769.5
+      },
+      {
+        "sku": "SKU-108",
+        "quantity": 3,
+        "unitPrice": 1299.0
+      },
+      {
+        "sku": "SKU-119",
+        "quantity": 4,
+        "unitPrice": 619.0
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "customerId": 9,
+    "createdAt": "2026-09-11",
+    "status": "Shipped",
+    "paidAt": "2026-09-12T10:52:00+03:00",
+    "discount": 0.0,
+    "lines": [
+      {
+        "sku": "SKU-153",
+        "quantity": 2,
+        "unitPrice": 239.0
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "customerId": 22,
+    "createdAt": "2026-09-16",
+    "status": "Shipped",
+    "paidAt": "2026-09-18T11:59:00+03:00",
+    "discount": 52.49,
+    "lines": [
+      {
+        "sku": "SKU-160",
+        "quantity": 3,
+        "unitPrice": 169.5
+      },
+      {
+        "sku": "SKU-111",
+        "quantity": 4,
+        "unitPrice": 529.0
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "customerId": 35,
+    "createdAt": "2026-09-21",
+    "status": "Cancelled",
+    "paidAt": null,
+    "discount": 98.85,
+    "lines": [
+      {
+        "sku": "SKU-107",
+        "quantity": 4,
+        "unitPrice": 599.0
+      },
+      {
+        "sku": "SKU-118",
+        "quantity": 5,
+        "unitPrice": 469.5
+      },
+      {
+        "sku": "SKU-129",
+        "quantity": 1,
+        "unitPrice": 199.0
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "customerId": 48,
+    "createdAt": "2026-09-26",
+    "status": "Shipped",
+    "paidAt": "2026-09-27T13:13:00+03:00",
+    "discount": 150.5,
+    "lines": [
+      {
+        "sku": "SKU-114",
+        "quantity": 5,
+        "unitPrice": 139.0
+      },
+      {
+        "sku": "SKU-125",
+        "quantity": 1,
+        "unitPrice": 289.0
+      },
+      {
+        "sku": "SKU-136",
+        "quantity": 2,
+        "unitPrice": 129.5
+      },
+      {
+        "sku": "SKU-147",
+        "quantity": 3,
+        "unitPrice": 589.0
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "customerId": 11,
+    "createdAt": "2026-10-01",
+    "status": "New",
+    "paidAt": null,
+    "discount": 21.29,
+    "lines": [
+      {
+        "sku": "SKU-121",
+        "quantity": 1,
+        "unitPrice": 709.5
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "customerId": 24,
+    "createdAt": "2026-10-06",
+    "status": "New",
+    "paidAt": null,
+    "discount": 26.3,
+    "lines": [
+      {
+        "sku": "SKU-128",
+        "quantity": 2,
+        "unitPrice": 229.0
+      },
+      {
+        "sku": "SKU-139",
+        "quantity": 3,
+        "unitPrice": 139.5
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "customerId": 37,
+    "createdAt": "2026-10-11",
+    "status": "Paid",
+    "paidAt": "2026-10-12T16:34:00+03:00",
+    "discount": 600.0,
+    "lines": [
+      {
+        "sku": "SKU-135",
+        "quantity": 3,
+        "unitPrice": 569.0
+      },
+      {
+        "sku": "SKU-146",
+        "quantity": 4,
+        "unitPrice": 299.0
+      },
+      {
+        "sku": "SKU-157",
+        "quantity": 5,
+        "unitPrice": 769.5
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "customerId": 50,
+    "createdAt": "2026-10-16",
+    "status": "Paid",
+    "paidAt": "2026-10-18T17:41:00+03:00",
+    "discount": 72.42,
+    "lines": [
+      {
+        "sku": "SKU-142",
+        "quantity": 4,
+        "unitPrice": 509.5
+      },
+      {
+        "sku": "SKU-153",
+        "quantity": 5,
+        "unitPrice": 239.0
+      },
+      {
+        "sku": "SKU-104",
+        "quantity": 1,
+        "unitPrice": 189.0
+      },
+      {
+        "sku": "SKU-115",
+        "quantity": 2,
+        "unitPrice": 99.5
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "customerId": 13,
+    "createdAt": "2026-10-21",
+    "status": "Paid",
+    "paidAt": "2026-10-21T10:48:00+03:00",
+    "discount": 32.9,
+    "lines": [
+      {
+        "sku": "SKU-149",
+        "quantity": 5,
+        "unitPrice": 329.0
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "customerId": 26,
+    "createdAt": "2026-10-26",
+    "status": "Shipped",
+    "paidAt": "2026-10-27T11:55:00+02:00",
+    "discount": 51.54,
+    "lines": [
+      {
+        "sku": "SKU-156",
+        "quantity": 1,
+        "unitPrice": 1379.0
+      },
+      {
+        "sku": "SKU-107",
+        "quantity": 2,
+        "unitPrice": 599.0
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "customerId": 39,
+    "createdAt": "2026-10-31",
+    "status": "Shipped",
+    "paidAt": "2026-11-02T12:02:00+02:00",
+    "discount": 34.64,
+    "lines": [
+      {
+        "sku": "SKU-103",
+        "quantity": 2,
+        "unitPrice": 79.5
+      },
+      {
+        "sku": "SKU-114",
+        "quantity": 3,
+        "unitPrice": 139.0
+      },
+      {
+        "sku": "SKU-125",
+        "quantity": 4,
+        "unitPrice": 289.0
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "customerId": 2,
+    "createdAt": "2026-11-05",
+    "status": "Shipped",
+    "paidAt": "2026-11-05T13:09:00+02:00",
+    "discount": 436.36,
+    "lines": [
+      {
+        "sku": "SKU-110",
+        "quantity": 3,
+        "unitPrice": 239.0
+      },
+      {
+        "sku": "SKU-121",
+        "quantity": 4,
+        "unitPrice": 709.5
+      },
+      {
+        "sku": "SKU-132",
+        "quantity": 5,
+        "unitPrice": 1339.0
+      },
+      {
+        "sku": "SKU-143",
+        "quantity": 1,
+        "unitPrice": 659.0
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "customerId": 15,
+    "createdAt": "2026-09-01",
+    "status": "Cancelled",
+    "paidAt": "2026-09-02T14:16:00+03:00",
+    "discount": 0.0,
+    "lines": [
+      {
+        "sku": "SKU-117",
+        "quantity": 4,
+        "unitPrice": 179.0
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "customerId": 28,
+    "createdAt": "2026-09-06",
+    "status": "Shipped",
+    "paidAt": "2026-09-08T15:23:00+03:00",
+    "discount": 55.83,
+    "lines": [
+      {
+        "sku": "SKU-124",
+        "quantity": 5,
+        "unitPrice": 109.5
+      },
+      {
+        "sku": "SKU-135",
+        "quantity": 1,
+        "unitPrice": 569.0
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "customerId": 41,
+    "createdAt": "2026-09-11",
+    "status": "New",
+    "paidAt": null,
+    "discount": 118.75,
+    "lines": [
+      {
+        "sku": "SKU-131",
+        "quantity": 1,
+        "unitPrice": 639.0
+      },
+      {
+        "sku": "SKU-142",
+        "quantity": 2,
+        "unitPrice": 509.5
+      },
+      {
+        "sku": "SKU-153",
+        "quantity": 3,
+        "unitPrice": 239.0
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "customerId": 4,
+    "createdAt": "2026-09-16",
+    "status": "New",
+    "paidAt": null,
+    "discount": 233.4,
+    "lines": [
+      {
+        "sku": "SKU-138",
+        "quantity": 2,
+        "unitPrice": 179.0
+      },
+      {
+        "sku": "SKU-149",
+        "quantity": 3,
+        "unitPrice": 329.0
+      },
+      {
+        "sku": "SKU-160",
+        "quantity": 4,
+        "unitPrice": 169.5
+      },
+      {
+        "sku": "SKU-111",
+        "quantity": 5,
+        "unitPrice": 529.0
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "customerId": 17,
+    "createdAt": "2026-09-21",
+    "status": "Paid",
+    "paidAt": "2026-09-23T10:44:00+03:00",
+    "discount": 157.4,
+    "lines": [
+      {
+        "sku": "SKU-145",
+        "quantity": 3,
+        "unitPrice": 749.5
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "customerId": 30,
+    "createdAt": "2026-09-26",
+    "status": "Paid",
+    "paidAt": "2026-09-26T11:51:00+03:00",
+    "discount": 29.47,
+    "lines": [
+      {
+        "sku": "SKU-152",
+        "quantity": 4,
+        "unitPrice": 269.0
+      },
+      {
+        "sku": "SKU-103",
+        "quantity": 5,
+        "unitPrice": 79.5
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "customerId": 43,
+    "createdAt": "2026-10-01",
+    "status": "Paid",
+    "paidAt": "2026-10-02T12:58:00+03:00",
+    "discount": 94.06,
+    "lines": [
+      {
+        "sku": "SKU-159",
+        "quantity": 5,
+        "unitPrice": 609.0
+      },
+      {
+        "sku": "SKU-110",
+        "quantity": 1,
+        "unitPrice": 239.0
+      },
+      {
+        "sku": "SKU-121",
+        "quantity": 2,
+        "unitPrice": 709.5
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "customerId": 6,
+    "createdAt": "2026-10-06",
+    "status": "Shipped",
+    "paidAt": "2026-10-08T13:05:00+03:00",
+    "discount": 41.05,
+    "lines": [
+      {
+        "sku": "SKU-106",
+        "quantity": 1,
+        "unitPrice": 449.5
+      },
+      {
+        "sku": "SKU-117",
+        "quantity": 2,
+        "unitPrice": 179.0
+      },
+      {
+        "sku": "SKU-128",
+        "quantity": 3,
+        "unitPrice": 229.0
+      },
+      {
+        "sku": "SKU-139",
+        "quantity": 4,
+        "unitPrice": 139.5
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "customerId": 19,
+    "createdAt": "2026-10-11",
+    "status": "Shipped",
+    "paidAt": "2026-10-11T14:12:00+03:00",
+    "discount": 0.0,
+    "lines": [
+      {
+        "sku": "SKU-113",
+        "quantity": 2,
+        "unitPrice": 269.0
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "customerId": 32,
+    "createdAt": "2026-10-16",
+    "status": "Shipped",
+    "paidAt": "2026-10-17T15:19:00+03:00",
+    "discount": 260.52,
+    "lines": [
+      {
+        "sku": "SKU-120",
+        "quantity": 3,
+        "unitPrice": 1319.0
+      },
+      {
+        "sku": "SKU-131",
+        "quantity": 4,
+        "unitPrice": 639.0
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "customerId": 45,
+    "createdAt": "2026-10-21",
+    "status": "Cancelled",
+    "paidAt": null,
+    "discount": 34.04,
+    "lines": [
+      {
+        "sku": "SKU-127",
+        "quantity": 4,
+        "unitPrice": 119.5
+      },
+      {
+        "sku": "SKU-138",
+        "quantity": 5,
+        "unitPrice": 179.0
+      },
+      {
+        "sku": "SKU-149",
+        "quantity": 1,
+        "unitPrice": 329.0
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "customerId": 8,
+    "createdAt": "2026-10-26",
+    "status": "Shipped",
+    "paidAt": "2026-10-26T17:33:00+02:00",
+    "discount": 468.97,
+    "lines": [
+      {
+        "sku": "SKU-134",
+        "quantity": 5,
+        "unitPrice": 279.0
+      },
+      {
+        "sku": "SKU-145",
+        "quantity": 1,
+        "unitPrice": 749.5
+      },
+      {
+        "sku": "SKU-156",
+        "quantity": 2,
+        "unitPrice": 1379.0
+      },
+      {
+        "sku": "SKU-107",
+        "quantity": 3,
+        "unitPrice": 599.0
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "customerId": 21,
+    "createdAt": "2026-10-31",
+    "status": "New",
+    "paidAt": null,
+    "discount": 6.57,
+    "lines": [
+      {
+        "sku": "SKU-141",
+        "quantity": 1,
+        "unitPrice": 219.0
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "customerId": 34,
+    "createdAt": "2026-11-05",
+    "status": "New",
+    "paidAt": null,
+    "discount": 106.3,
+    "lines": [
+      {
+        "sku": "SKU-148",
+        "quantity": 2,
+        "unitPrice": 149.5
+      },
+      {
+        "sku": "SKU-159",
+        "quantity": 3,
+        "unitPrice": 609.0
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "customerId": 47,
+    "createdAt": "2026-09-01",
+    "status": "Paid",
+    "paidAt": "2026-09-01T12:54:00+03:00",
+    "discount": 331.1,
+    "lines": [
+      {
+        "sku": "SKU-155",
+        "quantity": 3,
+        "unitPrice": 679.0
+      },
+      {
+        "sku": "SKU-106",
+        "quantity": 4,
+        "unitPrice": 449.5
+      },
+      {
+        "sku": "SKU-117",
+        "quantity": 5,
+        "unitPrice": 179.0
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "customerId": 10,
+    "createdAt": "2026-09-06",
+    "status": "Paid",
+    "paidAt": "2026-09-07T13:01:00+03:00",
+    "discount": 61.37,
+    "lines": [
+      {
+        "sku": "SKU-102",
+        "quantity": 4,
+        "unitPrice": 119.0
+      },
+      {
+        "sku": "SKU-113",
+        "quantity": 5,
+        "unitPrice": 269.0
+      },
+      {
+        "sku": "SKU-124",
+        "quantity": 1,
+        "unitPrice": 109.5
+      },
+      {
+        "sku": "SKU-135",
+        "quantity": 2,
+        "unitPrice": 569.0
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "customerId": 23,
+    "createdAt": "2026-09-11",
+    "status": "Paid",
+    "paidAt": "2026-09-13T14:08:00+03:00",
+    "discount": 68.95,
+    "lines": [
+      {
+        "sku": "SKU-109",
+        "quantity": 5,
+        "unitPrice": 689.5
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "customerId": 36,
+    "createdAt": "2026-09-16",
+    "status": "Shipped",
+    "paidAt": "2026-09-16T15:15:00+03:00",
+    "discount": 0.0,
+    "lines": [
+      {
+        "sku": "SKU-116",
+        "quantity": 1,
+        "unitPrice": 209.0
+      },
+      {
+        "sku": "SKU-127",
+        "quantity": 2,
+        "unitPrice": 119.5
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "customerId": 49,
+    "createdAt": "2026-09-21",
+    "status": "Shipped",
+    "paidAt": "2026-09-22T16:22:00+03:00",
+    "discount": 98.66,
+    "lines": [
+      {
+        "sku": "SKU-123",
+        "quantity": 2,
+        "unitPrice": 549.0
+      },
+      {
+        "sku": "SKU-134",
+        "quantity": 3,
+        "unitPrice": 279.0
+      },
+      {
+        "sku": "SKU-145",
+        "quantity": 4,
+        "unitPrice": 749.5
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "customerId": 12,
+    "createdAt": "2026-09-26",
+    "status": "Shipped",
+    "paidAt": "2026-09-28T17:29:00+03:00",
+    "discount": 75.38,
+    "lines": [
+      {
+        "sku": "SKU-130",
+        "quantity": 3,
+        "unitPrice": 489.5
+      },
+      {
+        "sku": "SKU-141",
+        "quantity": 4,
+        "unitPrice": 219.0
+      },
+      {
+        "sku": "SKU-152",
+        "quantity": 5,
+        "unitPrice": 269.0
+      },
+      {
+        "sku": "SKU-103",
+        "quantity": 1,
+        "unitPrice": 79.5
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "customerId": 25,
+    "createdAt": "2026-10-01",
+    "status": "Cancelled",
+    "paidAt": "2026-10-01T10:36:00+03:00",
+    "discount": 24.72,
+    "lines": [
+      {
+        "sku": "SKU-137",
+        "quantity": 4,
+        "unitPrice": 309.0
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "customerId": 38,
+    "createdAt": "2026-10-06",
+    "status": "Shipped",
+    "paidAt": "2026-10-07T11:43:00+03:00",
+    "discount": 523.18,
+    "lines": [
+      {
+        "sku": "SKU-144",
+        "quantity": 5,
+        "unitPrice": 1359.0
+      },
+      {
+        "sku": "SKU-155",
+        "quantity": 1,
+        "unitPrice": 679.0
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "customerId": 1,
+    "createdAt": "2026-10-11",
+    "status": "New",
+    "paidAt": null,
+    "discount": 60.23,
+    "lines": [
+      {
+        "sku": "SKU-151",
+        "quantity": 1,
+        "unitPrice": 159.5
+      },
+      {
+        "sku": "SKU-102",
+        "quantity": 2,
+        "unitPrice": 119.0
+      },
+      {
+        "sku": "SKU-113",
+        "quantity": 3,
+        "unitPrice": 269.0
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "customerId": 14,
+    "createdAt": "2026-10-16",
+    "status": "New",
+    "paidAt": null,
+    "discount": 600.0,
+    "lines": [
+      {
+        "sku": "SKU-158",
+        "quantity": 2,
+        "unitPrice": 319.0
+      },
+      {
+        "sku": "SKU-109",
+        "quantity": 3,
+        "unitPrice": 689.5
+      },
+      {
+        "sku": "SKU-120",
+        "quantity": 4,
+        "unitPrice": 1319.0
+      },
+      {
+        "sku": "SKU-131",
+        "quantity": 5,
+        "unitPrice": 639.0
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "customerId": 27,
+    "createdAt": "2026-10-21",
+    "status": "Paid",
+    "paidAt": "2026-10-22T14:04:00+03:00",
+    "discount": 23.85,
+    "lines": [
+      {
+        "sku": "SKU-105",
+        "quantity": 3,
+        "unitPrice": 159.0
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "customerId": 40,
+    "createdAt": "2026-10-26",
+    "status": "Paid",
+    "paidAt": "2026-10-28T15:11:00+02:00",
+    "discount": 62.06,
+    "lines": [
+      {
+        "sku": "SKU-112",
+        "quantity": 4,
+        "unitPrice": 89.5
+      },
+      {
+        "sku": "SKU-123",
+        "quantity": 5,
+        "unitPrice": 549.0
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "customerId": 3,
+    "createdAt": "2026-10-31",
+    "status": "Paid",
+    "paidAt": "2026-10-31T16:18:00+02:00",
+    "discount": 80.45,
+    "lines": [
+      {
+        "sku": "SKU-119",
+        "quantity": 5,
+        "unitPrice": 619.0
+      },
+      {
+        "sku": "SKU-130",
+        "quantity": 1,
+        "unitPrice": 489.5
+      },
+      {
+        "sku": "SKU-141",
+        "quantity": 2,
+        "unitPrice": 219.0
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "customerId": 16,
+    "createdAt": "2026-11-05",
+    "status": "Shipped",
+    "paidAt": "2026-11-06T17:25:00+02:00",
+    "discount": 73.23,
+    "lines": [
+      {
+        "sku": "SKU-126",
+        "quantity": 1,
+        "unitPrice": 159.0
+      },
+      {
+        "sku": "SKU-137",
+        "quantity": 2,
+        "unitPrice": 309.0
+      },
+      {
+        "sku": "SKU-148",
+        "quantity": 3,
+        "unitPrice": 149.5
+      },
+      {
+        "sku": "SKU-159",
+        "quantity": 4,
+        "unitPrice": 609.0
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "customerId": 29,
+    "createdAt": "2026-09-01",
+    "status": "Shipped",
+    "paidAt": "2026-09-03T10:32:00+03:00",
+    "discount": 29.18,
+    "lines": [
+      {
+        "sku": "SKU-133",
+        "quantity": 2,
+        "unitPrice": 729.5
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "customerId": 42,
+    "createdAt": "2026-09-06",
+    "status": "Shipped",
+    "paidAt": "2026-09-06T11:39:00+03:00",
+    "discount": 27.7,
+    "lines": [
+      {
+        "sku": "SKU-140",
+        "quantity": 3,
+        "unitPrice": 249.0
+      },
+      {
+        "sku": "SKU-151",
+        "quantity": 4,
+        "unitPrice": 159.5
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "customerId": 5,
+    "createdAt": "2026-09-11",
+    "status": "Cancelled",
+    "paidAt": null,
+    "discount": 92.81,
+    "lines": [
+      {
+        "sku": "SKU-147",
+        "quantity": 4,
+        "unitPrice": 589.0
+      },
+      {
+        "sku": "SKU-158",
+        "quantity": 5,
+        "unitPrice": 319.0
+      },
+      {
+        "sku": "SKU-109",
+        "quantity": 1,
+        "unitPrice": 689.5
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "customerId": 18,
+    "createdAt": "2026-09-16",
+    "status": "Shipped",
+    "paidAt": "2026-09-18T13:53:00+03:00",
+    "discount": 179.15,
+    "lines": [
+      {
+        "sku": "SKU-154",
+        "quantity": 5,
+        "unitPrice": 529.5
+      },
+      {
+        "sku": "SKU-105",
+        "quantity": 1,
+        "unitPrice": 159.0
+      },
+      {
+        "sku": "SKU-116",
+        "quantity": 2,
+        "unitPrice": 209.0
+      },
+      {
+        "sku": "SKU-127",
+        "quantity": 3,
+        "unitPrice": 119.5
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "customerId": 31,
+    "createdAt": "2026-09-21",
+    "status": "New",
+    "paidAt": null,
+    "discount": 7.47,
+    "lines": [
+      {
+        "sku": "SKU-101",
+        "quantity": 1,
+        "unitPrice": 249.0
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "customerId": 44,
+    "createdAt": "2026-09-26",
+    "status": "New",
+    "paidAt": null,
+    "discount": 222.75,
+    "lines": [
+      {
+        "sku": "SKU-108",
+        "quantity": 2,
+        "unitPrice": 1299.0
+      },
+      {
+        "sku": "SKU-119",
+        "quantity": 3,
+        "unitPrice": 619.0
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "customerId": 7,
+    "createdAt": "2026-10-01",
+    "status": "Paid",
+    "paidAt": "2026-10-03T16:14:00+03:00",
+    "discount": 173.57,
+    "lines": [
+      {
+        "sku": "SKU-115",
+        "quantity": 3,
+        "unitPrice": 99.5
+      },
+      {
+        "sku": "SKU-126",
+        "quantity": 4,
+        "unitPrice": 159.0
+      },
+      {
+        "sku": "SKU-137",
+        "quantity": 5,
+        "unitPrice": 309.0
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "customerId": 20,
+    "createdAt": "2026-10-06",
+    "status": "Paid",
+    "paidAt": "2026-10-06T17:21:00+03:00",
+    "discount": 296.02,
+    "lines": [
+      {
+        "sku": "SKU-122",
+        "quantity": 4,
+        "unitPrice": 259.0
+      },
+      {
+        "sku": "SKU-133",
+        "quantity": 5,
+        "unitPrice": 729.5
+      },
+      {
+        "sku": "SKU-144",
+        "quantity": 1,
+        "unitPrice": 1359.0
+      },
+      {
+        "sku": "SKU-155",
+        "quantity": 2,
+        "unitPrice": 679.0
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "customerId": 33,
+    "createdAt": "2026-10-11",
+    "status": "Paid",
+    "paidAt": "2026-10-12T10:28:00+03:00",
+    "discount": 0.0,
+    "lines": [
+      {
+        "sku": "SKU-129",
+        "quantity": 5,
+        "unitPrice": 199.0
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "customerId": 46,
+    "createdAt": "2026-10-16",
+    "status": "Shipped",
+    "paidAt": "2026-10-18T11:35:00+03:00",
+    "discount": 26.15,
+    "lines": [
+      {
+        "sku": "SKU-136",
+        "quantity": 1,
+        "unitPrice": 129.5
+      },
+      {
+        "sku": "SKU-147",
+        "quantity": 2,
+        "unitPrice": 589.0
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "customerId": 9,
+    "createdAt": "2026-10-21",
+    "status": "Shipped",
+    "paidAt": "2026-10-21T12:42:00+03:00",
+    "discount": 70.85,
+    "lines": [
+      {
+        "sku": "SKU-143",
+        "quantity": 2,
+        "unitPrice": 659.0
+      },
+      {
+        "sku": "SKU-154",
+        "quantity": 3,
+        "unitPrice": 529.5
+      },
+      {
+        "sku": "SKU-105",
+        "quantity": 4,
+        "unitPrice": 159.0
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "customerId": 22,
+    "createdAt": "2026-10-26",
+    "status": "Shipped",
+    "paidAt": "2026-10-27T13:49:00+02:00",
+    "discount": 51.79,
+    "lines": [
+      {
+        "sku": "SKU-150",
+        "quantity": 3,
+        "unitPrice": 199.0
+      },
+      {
+        "sku": "SKU-101",
+        "quantity": 4,
+        "unitPrice": 249.0
+      },
+      {
+        "sku": "SKU-112",
+        "quantity": 5,
+        "unitPrice": 89.5
+      },
+      {
+        "sku": "SKU-123",
+        "quantity": 1,
+        "unitPrice": 549.0
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "customerId": 35,
+    "createdAt": "2026-10-31",
+    "status": "Cancelled",
+    "paidAt": "2026-11-02T14:56:00+02:00",
+    "discount": 61.56,
+    "lines": [
+      {
+        "sku": "SKU-157",
+        "quantity": 4,
+        "unitPrice": 769.5
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "customerId": 48,
+    "createdAt": "2026-11-05",
+    "status": "Shipped",
+    "paidAt": "2026-11-05T15:03:00+02:00",
+    "discount": 52.23,
+    "lines": [
+      {
+        "sku": "SKU-104",
+        "quantity": 5,
+        "unitPrice": 189.0
+      },
+      {
+        "sku": "SKU-115",
+        "quantity": 1,
+        "unitPrice": 99.5
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "customerId": 11,
+    "createdAt": "2026-09-01",
+    "status": "New",
+    "paidAt": null,
+    "discount": 161.78,
+    "lines": [
+      {
+        "sku": "SKU-111",
+        "quantity": 1,
+        "unitPrice": 529.0
+      },
+      {
+        "sku": "SKU-122",
+        "quantity": 2,
+        "unitPrice": 259.0
+      },
+      {
+        "sku": "SKU-133",
+        "quantity": 3,
+        "unitPrice": 729.5
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "customerId": 24,
+    "createdAt": "2026-09-06",
+    "status": "New",
+    "paidAt": null,
+    "discount": 166.48,
+    "lines": [
+      {
+        "sku": "SKU-118",
+        "quantity": 2,
+        "unitPrice": 469.5
+      },
+      {
+        "sku": "SKU-129",
+        "quantity": 3,
+        "unitPrice": 199.0
+      },
+      {
+        "sku": "SKU-140",
+        "quantity": 4,
+        "unitPrice": 249.0
+      },
+      {
+        "sku": "SKU-151",
+        "quantity": 5,
+        "unitPrice": 159.5
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "customerId": 37,
+    "createdAt": "2026-09-11",
+    "status": "Paid",
+    "paidAt": "2026-09-11T10:24:00+03:00",
+    "discount": 43.35,
+    "lines": [
+      {
+        "sku": "SKU-125",
+        "quantity": 3,
+        "unitPrice": 289.0
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "customerId": 50,
+    "createdAt": "2026-09-16",
+    "status": "Paid",
+    "paidAt": "2026-09-17T11:31:00+03:00",
+    "discount": 346.04,
+    "lines": [
+      {
+        "sku": "SKU-132",
+        "quantity": 4,
+        "unitPrice": 1339.0
+      },
+      {
+        "sku": "SKU-143",
+        "quantity": 5,
+        "unitPrice": 659.0
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "customerId": 13,
+    "createdAt": "2026-09-21",
+    "status": "Paid",
+    "paidAt": "2026-09-23T12:38:00+03:00",
+    "discount": 27.89,
+    "lines": [
+      {
+        "sku": "SKU-139",
+        "quantity": 5,
+        "unitPrice": 139.5
+      },
+      {
+        "sku": "SKU-150",
+        "quantity": 1,
+        "unitPrice": 199.0
+      },
+      {
+        "sku": "SKU-101",
+        "quantity": 2,
+        "unitPrice": 249.0
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "customerId": 26,
+    "createdAt": "2026-09-26",
+    "status": "Shipped",
+    "paidAt": "2026-09-26T13:45:00+03:00",
+    "discount": 328.44,
+    "lines": [
+      {
+        "sku": "SKU-146",
+        "quantity": 1,
+        "unitPrice": 299.0
+      },
+      {
+        "sku": "SKU-157",
+        "quantity": 2,
+        "unitPrice": 769.5
+      },
+      {
+        "sku": "SKU-108",
+        "quantity": 3,
+        "unitPrice": 1299.0
+      },
+      {
+        "sku": "SKU-119",
+        "quantity": 4,
+        "unitPrice": 619.0
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "customerId": 39,
+    "createdAt": "2026-10-01",
+    "status": "Shipped",
+    "paidAt": "2026-10-02T14:52:00+03:00",
+    "discount": 0.0,
+    "lines": [
+      {
+        "sku": "SKU-153",
+        "quantity": 2,
+        "unitPrice": 239.0
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "customerId": 2,
+    "createdAt": "2026-10-06",
+    "status": "Shipped",
+    "paidAt": "2026-10-08T15:59:00+03:00",
+    "discount": 52.49,
+    "lines": [
+      {
+        "sku": "SKU-160",
+        "quantity": 3,
+        "unitPrice": 169.5
+      },
+      {
+        "sku": "SKU-111",
+        "quantity": 4,
+        "unitPrice": 529.0
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "customerId": 15,
+    "createdAt": "2026-10-11",
+    "status": "Cancelled",
+    "paidAt": null,
+    "discount": 98.85,
+    "lines": [
+      {
+        "sku": "SKU-107",
+        "quantity": 4,
+        "unitPrice": 599.0
+      },
+      {
+        "sku": "SKU-118",
+        "quantity": 5,
+        "unitPrice": 469.5
+      },
+      {
+        "sku": "SKU-129",
+        "quantity": 1,
+        "unitPrice": 199.0
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "customerId": 28,
+    "createdAt": "2026-10-16",
+    "status": "Shipped",
+    "paidAt": "2026-10-17T17:13:00+03:00",
+    "discount": 150.5,
+    "lines": [
+      {
+        "sku": "SKU-114",
+        "quantity": 5,
+        "unitPrice": 139.0
+      },
+      {
+        "sku": "SKU-125",
+        "quantity": 1,
+        "unitPrice": 289.0
+      },
+      {
+        "sku": "SKU-136",
+        "quantity": 2,
+        "unitPrice": 129.5
+      },
+      {
+        "sku": "SKU-147",
+        "quantity": 3,
+        "unitPrice": 589.0
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "customerId": 41,
+    "createdAt": "2026-10-21",
+    "status": "New",
+    "paidAt": null,
+    "discount": 21.29,
+    "lines": [
+      {
+        "sku": "SKU-121",
+        "quantity": 1,
+        "unitPrice": 709.5
+      }
+    ]
+  }
+]
