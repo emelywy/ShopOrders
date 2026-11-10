@@ -10,13 +10,13 @@ using ShopOrders.Domain;
 public static class Display
 {
     /// <summary>
-    /// Форматує суму з двома знаками й комою: 1234,50.
+    /// Форматує суму з двома знаками після крапки: 1234.50 (так само, як у журналі).
     /// </summary>
     /// <param name="amount">Сума, грн.</param>
     /// <returns>Текст суми без позначення валюти.</returns>
     public static string Money(decimal amount)
     {
-        return amount.ToString("0.00", CultureInfo.InvariantCulture).Replace('.', ',');
+        return amount.ToString("0.00", CultureInfo.InvariantCulture);
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 namespace ShopOrders.Application;
 
+using System.Globalization;
 using ShopOrders.Application.Abstractions;
 using ShopOrders.Application.Pricing;
 using ShopOrders.Domain;
@@ -70,9 +71,10 @@ public sealed class OrderService
         order.ApplyDiscount(_discounts.DiscountFor(order.Subtotal, customer.Status));
         _orders.Add(order);
         _orders.SaveChanges();
-        _log.LogInformation(
-            Scenarios.PlaceOrder,
+        string summary = string.Create(
+            CultureInfo.InvariantCulture,
             $"Завершено: замовлення №{order.Id}, до сплати {order.Total:0.00} грн.");
+        _log.LogInformation(Scenarios.PlaceOrder, summary);
         return order;
     }
 

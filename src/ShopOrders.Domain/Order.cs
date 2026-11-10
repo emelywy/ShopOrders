@@ -1,5 +1,7 @@
 namespace ShopOrders.Domain;
 
+using System.Globalization;
+
 /// <summary>
 /// Замовлення інтернет-магазину: документ зі станом, позиціями й зафіксованою знижкою.
 /// Стан змінюється лише подіями за таблицею <see cref="OrderTransitions"/>.
@@ -118,8 +120,9 @@ public sealed class Order
 
         if (amount < Total)
         {
-            string message = $"Внесено {amount:0.00} грн, до сплати {Total:0.00} грн, "
-                + $"бракує {Total - amount:0.00} грн.";
+            string message = string.Create(
+                CultureInfo.InvariantCulture,
+                $"Внесено {amount:0.00}, потрібно {Total:0.00}, бракує {Total - amount:0.00} грн.");
             throw new DomainRuleException(RuleCodes.InsufficientPayment, message);
         }
 

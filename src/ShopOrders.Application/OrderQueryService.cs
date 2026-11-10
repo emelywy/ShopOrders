@@ -1,5 +1,6 @@
 namespace ShopOrders.Application;
 
+using System.Globalization;
 using ShopOrders.Application.Abstractions;
 using ShopOrders.Application.Reports;
 using ShopOrders.Domain;
@@ -68,7 +69,10 @@ public sealed class OrderQueryService
             throw new ArgumentException("Кінець періоду раніше за початок.", nameof(periodEnd));
         }
 
-        _log.LogInformation(Scenarios.SalesByPeriod, $"Початок: {periodStart} - {periodEnd}.");
+        string period = string.Create(
+            CultureInfo.InvariantCulture,
+            $"Початок: період {periodStart:yyyy-MM-dd} - {periodEnd:yyyy-MM-dd}.");
+        _log.LogInformation(Scenarios.SalesByPeriod, period);
         List<SalesReportRow> rows = _orders.ListAll()
             .Where(order => IsSale(order, periodStart, periodEnd))
             .GroupBy(PaidDate)
