@@ -1,6 +1,5 @@
-<!-- Налаштування для CI -->
-
 <Project>
+  <!-- Спільні налаштування всіх проєктів рішення ShopOrders. -->
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -10,12 +9,19 @@
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <VersionPrefix>0.8.0</VersionPrefix>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <VersionPrefix>0.9.0</VersionPrefix>
     <Authors>Діана Андрощук</Authors>
     <Product>ShopOrders</Product>
-    <NuGetAudit>true</NuGetAudit>
-    <NuGetAuditMode>all</NuGetAuditMode>
-    <NoWarn>$(NoWarn);SA1516;SA1515;SA1623;SA1642;CA1305;CA1848</NoWarn>
+    <!--
+      Обґрунтування придушених правил:
+      SA1623 - вимагає англійського початку "Gets ..." в описі властивості, а документація
+               проєкту ведеться українською;
+      SA1642 - вимагає англійського шаблону "Initializes a new instance" в описі конструктора;
+      CA1305 - інтерполяція в повідомленнях журналу й винятків; гроші й дати у файлах
+               і на екрані форматуються явно з CultureInfo.InvariantCulture.
+    -->
+    <NoWarn>$(NoWarn);SA1623;SA1642;CA1305</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,4 +31,3 @@
     </PackageReference>
   </ItemGroup>
 </Project>
-
