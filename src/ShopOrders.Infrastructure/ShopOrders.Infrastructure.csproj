@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Інфраструктура залежить від прикладного шару й реалізує його інтерфейси. -->
+  <ItemGroup>
+    <ProjectReference Include="..\ShopOrders.Application\ShopOrders.Application.csproj" />
+  </ItemGroup>
+
+</Project>
