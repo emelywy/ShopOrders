@@ -132,6 +132,7 @@ public sealed class OrderService
 
     private OrderLine BuildLine(OrderLineRequest line)
     {
+        // TODO(TD-08): залишок товару на складі не перевіряється.
         Product product = _catalog.FindProduct(line.Sku)
             ?? throw Reject(
                 Scenarios.PlaceOrder,

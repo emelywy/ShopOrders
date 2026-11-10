@@ -84,6 +84,7 @@ public sealed class JsonOrderRepository : IOrderRepository
     /// <exception cref="IOException">Файл недоступний для запису.</exception>
     public void SaveChanges()
     {
+        // TODO(TD-07): файл пишеться цілком і без блокування; два екземпляри втратять зміни.
         List<OrderRecord> records = _orders.Values
             .OrderBy(order => order.Id)
             .Select(OrderRecordMapper.ToRecord)

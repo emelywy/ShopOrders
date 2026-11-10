@@ -63,6 +63,7 @@ public sealed class TieredDiscountPolicy : IDiscountPolicy
 
     private static Dictionary<(OrderTier Tier, CustomerStatus Status), decimal> BuildRates()
     {
+        // TODO(TD-05): ставки зашиті в код; зміна політики магазину потребує перекомпіляції.
         return new Dictionary<(OrderTier Tier, CustomerStatus Status), decimal>
         {
             [(OrderTier.Small, CustomerStatus.Standard)] = 0.00m,
