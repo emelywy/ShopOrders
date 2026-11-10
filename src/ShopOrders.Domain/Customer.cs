@@ -18,7 +18,10 @@ public sealed class Customer
         ArgumentException.ThrowIfNullOrWhiteSpace(fullName);
         if (!Enum.IsDefined(status))
         {
-            throw new ArgumentOutOfRangeException(nameof(status), status, "Невідомий статус покупця.");
+            throw new ArgumentOutOfRangeException(
+                nameof(status),
+                status,
+                "Невідомий статус покупця.");
         }
 
         Id = id;
