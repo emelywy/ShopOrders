@@ -1,38 +1,56 @@
-name: CI
+name: ci
 
 on:
   push:
-    branches: [ main, 'feature/**' ]
+    branches: [ main, ci-demo ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  quality:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Отримати код
-      uses: actions/checkout@v4
+      - name: 1. Отримати код
+        uses: actions/checkout@v4
 
-    - name: Установити .NET 8
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: 1. Установити .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Відновити залежності
-      run: dotnet restore ShopOrders.sln
+      - name: 2. Відновити залежності
+        run: dotnet restore ShopOrders.sln
 
-    - name: Перевірка форматування
-      continue-on-error: true
-      run: dotnet format ShopOrders.sln --verify-no-changes --no-restore
+      - name: 3. Перевірити форматування за .editorconfig
+        run: dotnet format ShopOrders.sln --verify-no-changes --no-restore
 
-    - name: Складання Release з аналізаторами
-      run: dotnet build ShopOrders.sln -c Release --no-restore
+      - name: 4. Скласти Release без жодного попередження
+        run: dotnet build ShopOrders.sln -c Release --no-restore -warnaserror
 
-    - name: Зберегти звіт про покриття
-      if: always()
-      continue-on-error: true
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage
-        path: '**/coverage.cobertura.xml'
+      - name: 5-6. Запустити тести з покриттям і порогом 70 %
+        run: >-
+          dotnet test ShopOrders.sln -c Release --no-build
+          /p:CollectCoverage=true
+          /p:Threshold=70
+          /p:ThresholdType=line
+          /p:ThresholdStat=total
+          /p:CoverletOutputFormat=cobertura
+          /p:CoverletOutput=${{ github.workspace }}/coverage/
+
+      - name: 7. Побудувати HTML-звіт про покриття
+        if: always()
+        uses: danielpalme/ReportGenerator-GitHub-Action@5
+        with:
+          reports: coverage/coverage.cobertura.xml
+          targetdir: coveragereport
+          reporttypes: Html;TextSummary
+
+      - name: 7. Опублікувати звіт про покриття як артефакт
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage/
+            coveragereport/
