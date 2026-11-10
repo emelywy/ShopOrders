@@ -145,7 +145,7 @@ public sealed class Order
         Status = RequireTransition(OrderEvent.Cancel);
     }
 
-    private static string NameOf(OrderEvent orderEvent)
+    private static string Describe(OrderEvent orderEvent)
     {
         return orderEvent switch
         {
@@ -161,7 +161,7 @@ public sealed class Order
         return OrderTransitions.TargetOf(Status, orderEvent)
             ?? throw new DomainRuleException(
                 RuleCodes.ForbiddenTransition,
-                $"Замовлення №{Id} у стані {Status}: {NameOf(orderEvent)} заборонено.");
+                $"Замовлення №{Id} у стані {Status}: {Describe(orderEvent)} заборонено.");
     }
 
     private void EnsureEditable()
