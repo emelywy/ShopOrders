@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <!--
+      У тестах XML-документація не вимагається (CS1591, SA1600-SA1602), а підкреслення
+      в іменах потрібні конвенції Метод_Умова_Результат (CA1707).
+    -->
+    <NoWarn>$(NoWarn);CS1591;SA1600;SA1601;SA1602;CA1707</NoWarn>
+    <!-- Межа вимірювання покриття: лише домен і прикладний шар. -->
+    <Exclude>[ShopOrders.Infrastructure]*,[ShopOrders.App]*</Exclude>
+    <CoverletOutputFormat>cobertura</CoverletOutputFormat>
+    <ThresholdType>line</ThresholdType>
+    <ThresholdStat>total</ThresholdStat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ShopOrders.Domain\ShopOrders.Domain.csproj" />
+    <ProjectReference Include="..\..\src\ShopOrders.Application\ShopOrders.Application.csproj" />
+    <ProjectReference Include="..\..\src\ShopOrders.Infrastructure\ShopOrders.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
