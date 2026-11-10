@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShopOrders.Application\ShopOrders.Application.csproj" />
+    <ProjectReference Include="..\ShopOrders.Infrastructure\ShopOrders.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
