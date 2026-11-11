@@ -70,7 +70,7 @@ public sealed class TieredDiscountPolicy : IDiscountPolicy
             [(OrderTier.Small, CustomerStatus.Loyal)] = 0.03m,
             [(OrderTier.Small, CustomerStatus.Vip)] = 0.05m,
             [(OrderTier.Medium, CustomerStatus.Standard)] = 0.02m,
-            [(OrderTier.Medium, CustomerStatus.Loyal)] = 0.05m,
+            [(OrderTier.Medium, CustomerStatus.Loyal)] = 0.06m,
             [(OrderTier.Medium, CustomerStatus.Vip)] = 0.07m,
             [(OrderTier.Large, CustomerStatus.Standard)] = 0.04m,
             [(OrderTier.Large, CustomerStatus.Loyal)] = 0.07m,
