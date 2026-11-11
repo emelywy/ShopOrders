@@ -58,3 +58,9 @@ jobs:
           path: |
             coverage/
             coveragereport/
+
+      - name: 8. Димовий прогін застосунку на демонстраційному вводі
+        run: |
+          dotnet run --project src/ShopOrders.App -c Release --no-build < docs/demo-input.txt
+          echo "----- logs/shoporders.log -----"
+          cat logs/shoporders.log
