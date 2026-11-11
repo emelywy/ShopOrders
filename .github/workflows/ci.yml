@@ -33,6 +33,7 @@ jobs:
         run: dotnet build ShopOrders.sln -c Release --no-restore -warnaserror
 
       - name: 5-6. Запустити тести з покриттям і порогом 70 %
+        shell: bash
         run: >-
           dotnet test ShopOrders.sln -c Release --no-build
           /p:CollectCoverage=true
@@ -75,6 +76,7 @@ jobs:
             coveragereport/
 
       - name: 8. Димовий прогін застосунку на демонстраційному вводі
+        shell: bash
         run: |
           dotnet run --project src/ShopOrders.App -c Release --no-build < docs/demo-input.txt | tee smoke-output.txt
           cp logs/shoporders.log smoke-log.txt
