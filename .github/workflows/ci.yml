@@ -44,7 +44,11 @@ jobs:
         with:
           reports: coverage/coverage.cobertura.xml
           targetdir: coveragereport
-          reporttypes: Html;TextSummary
+          reporttypes: Html;TextSummary;MarkdownSummaryGithub
+
+      - name: 7. Показати підсумок покриття на сторінці прогону
+        if: always()
+        run: cat coveragereport/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: 7. Опублікувати звіт про покриття як артефакт
         if: always()
