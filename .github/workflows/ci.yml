@@ -3,8 +3,12 @@ name: ci
 on:
   push:
     branches: [ main, ci-demo ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ main ]
+
+permissions:
+  contents: write
 
 jobs:
   build-and-test:
@@ -37,6 +41,17 @@ jobs:
           /p:ThresholdStat=total
           /p:CoverletOutputFormat=cobertura
           /p:CoverletOutput=${{ github.workspace }}/coverage/
+          | tee test-output.txt
+
+      - name: 6. Показати покриття в анотаціях прогону
+        if: always()
+        run: |
+          table=$(grep -E '^\|' test-output.txt | sed ':a;N;$!ba;s/\n/%0A/g')
+          echo "::notice title=Покриття (coverlet)::${table}"
+
+      - name: 6. Показати тести, що впали
+        if: failure()
+        run: grep -E '^\s+Failed |Failed!|Passed!' test-output.txt | sed 's/^ *//' | while read -r line; do echo "::error title=Тест::${line}"; done
 
       - name: 7. Побудувати HTML-звіт про покриття
         if: always()
@@ -61,6 +76,16 @@ jobs:
 
       - name: 8. Димовий прогін застосунку на демонстраційному вводі
         run: |
-          dotnet run --project src/ShopOrders.App -c Release --no-build < docs/demo-input.txt
-          echo "----- logs/shoporders.log -----"
-          cat logs/shoporders.log
+          dotnet run --project src/ShopOrders.App -c Release --no-build < docs/demo-input.txt | tee smoke-output.txt
+          cp logs/shoporders.log smoke-log.txt
+          cat smoke-log.txt
+
+      - name: 9. Опублікувати реліз зі звітом покриття (лише для тегу)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          (cd coveragereport && zip -qr ../coverage-report.zip .)
+          gh release create "$GITHUB_REF_NAME" coverage-report.zip test-output.txt smoke-output.txt smoke-log.txt \
+            --title "ShopOrders $GITHUB_REF_NAME" \
+            --notes "Самостійна робота № 3: HTML-звіт покриття, вивід тестів і димового прогону."
